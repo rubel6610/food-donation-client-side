@@ -1,9 +1,10 @@
 import React from 'react';
+import Navbar from './../Components/Navbar';
 
 const Root = () => {
     return (
         <div>
-            <h1>Welcome to the Food Waste Reduction App</h1>
+            <Navbar/>
         </div>
     );
 };
