@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import UseAuth from "../../../hooks/UseAuth";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import StripeForm from "./../../Stripe/StripeForm";
+
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
-const FIXED_PAYMENT = 25;import StripeForm from './../../Stripe/StripeForm';
-
+const FIXED_PAYMENT = 25;
 
 const RequestCharityRole = () => {
-  const navigate = useNavigate();
+
   const { user } = UseAuth();
   const {
     register,
@@ -18,25 +18,21 @@ const RequestCharityRole = () => {
     formState: { errors },
   } = useForm();
 
-  const [charityInfo, setCharityInfo] = React.useState(null);
-
+  const [charityInfo, setCharityInfo] = useState(null);
   const onSubmit = async (data) => {
-    navigate("/dashboard/stripe-payment");
     setCharityInfo({
-      name: user.displayName,
-      email: user.email,
-      organization: data.organization,
-      mission: data.mission,
-      amount: FIXED_PAYMENT,
+      ...data,
+      name: user?.displayName,
+      email: user?.email,
+      payment_amount: FIXED_PAYMENT,
     });
   };
 
   return (
-    <div className="max-w-xl mx-auto  bg-gradient-to-br from-green-50 to-yellow-50 rounded-3xl shadow-2xl p-10 ">
+    <div className="max-w-xl mx-auto bg-gradient-to-br from-green-50 to-yellow-50 rounded-3xl shadow-2xl p-10">
       <h2 className="text-3xl font-bold text-green-700 text-center mb-8 font-serif">
         Request Charity Role
       </h2>
-
       {!charityInfo ? (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
           <div>
@@ -87,15 +83,17 @@ const RequestCharityRole = () => {
           </div>
           <button
             type="submit"
-            className="btn btn-success w-full text-lg font-bold"
+            className="mt-4 bg-green-600 text-white px-4 py-2 rounded w-full"
           >
-            Proceed to Payment
+            Continue to Payment
           </button>
         </form>
       ) : (
-        <Elements stripe={stripePromise}>
-          <StripeForm charityInfo={charityInfo} />
-        </Elements>
+        <div className="mt-8">
+          <Elements stripe={stripePromise}>
+            <StripeForm charityInfo={charityInfo} />
+          </Elements>
+        </div>
       )}
     </div>
   );

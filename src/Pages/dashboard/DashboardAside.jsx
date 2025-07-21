@@ -75,7 +75,7 @@ const DashboardAside = ({ isOpen, setIsOpen }) => {
                 }`
               }
             >
-              <FaRibbon /> Request Charity Role
+              <FaRibbon /> Be a Charity
             </NavLink>
           </li>
           <li>
