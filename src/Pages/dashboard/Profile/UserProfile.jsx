@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { useQuery } from "@tanstack/react-query";
@@ -15,12 +15,17 @@ const UserProfile = () => {
     queryKey: ["user", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get("/users?email=" + user.email);
       return res.data.find((u) => u.email === user.email);
     },
   });
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     if (singleUser?.email) {
@@ -65,8 +70,15 @@ const UserProfile = () => {
       `/users?email=${user.email}`,
       updatedUser
     );
-    
-    if (res.data.modifiedCount > 0) {
+    if (res.data.modifiedCount === 0) {
+      return Swal.fire({
+        title: "Error",
+        text: "No changes made",
+        icon: "info",
+      });
+    }
+    // Show success message
+    if (res.data.modifiedCount) {
       Swal.fire({
         title: "Success",
         text: "Profile updated successfully",
@@ -106,6 +118,12 @@ const UserProfile = () => {
             <p className="text-gray-500">
               {singleUser?.mobile || "No mobile added"}
             </p>
+            {singleUser.role !== "user" && (
+              <p className="text-gray-600">
+                <strong>Role : {singleUser.role}</strong>
+              </p>
+            )}
+
             {!editing && (
               <button
                 className="btn btn-accent mt-4"
@@ -134,7 +152,9 @@ const UserProfile = () => {
                     placeholder="Your Name"
                   />
                   {errors.name && (
-                    <span className="text-red-500 text-sm">{errors.name.message}</span>
+                    <span className="text-red-500 text-sm">
+                      {errors.name.message}
+                    </span>
                   )}
                 </div>
                 <div>
@@ -159,7 +179,6 @@ const UserProfile = () => {
                     {...register("photoURL")}
                     className="input input-bordered w-full text-black bg-white"
                   />
-                  
                 </div>
                 <div>
                   <label className="label font-semibold text-green-700">
@@ -178,7 +197,9 @@ const UserProfile = () => {
                     placeholder="Mobile Number"
                   />
                   {errors.mobile && (
-                    <span className="text-red-500 text-sm">{errors.mobile.message}</span>
+                    <span className="text-red-500 text-sm">
+                      {errors.mobile.message}
+                    </span>
                   )}
                 </div>
                 <div className="col-span-1 md:col-span-2 flex justify-end gap-3 mt-4">

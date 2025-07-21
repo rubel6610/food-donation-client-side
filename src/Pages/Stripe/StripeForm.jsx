@@ -2,9 +2,11 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import UseAxiosSecure from "./../../hooks/UseAxiosSecure";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const StripeForm = ({ charityInfo }) => {
   const axiosSecure = UseAxiosSecure();
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -20,11 +22,11 @@ const StripeForm = ({ charityInfo }) => {
 
     setProcessing(true);
 
-  
-    const { error: cardError, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card,
-    });
+    const { error: cardError, paymentMethod } =
+      await stripe.createPaymentMethod({
+        type: "card",
+        card,
+      });
 
     if (cardError) {
       setError(cardError.message);
@@ -34,40 +36,33 @@ const StripeForm = ({ charityInfo }) => {
       setError(null);
     }
 
-   
     const { data } = await axiosSecure.post("/create-payment-intent", {
       amount: charityInfo.payment_amount,
     });
 
     const clientSecret = data.clientSecret;
 
-   
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: paymentMethod.id,
-    
     });
 
     if (result.error) {
       setError(result.error.message);
       setProcessing(false);
     } else {
-     
       if (result.paymentIntent.status === "succeeded") {
         const charityData = {
           name: charityInfo.name,
           email: charityInfo.email,
           mission: charityInfo.mission,
           organization: charityInfo.organization,
-          payment_amount: result.paymentIntent.amount ,
+          payment_amount: result.paymentIntent.amount,
           paymentId: result.paymentIntent.id,
         };
 
         // 5. Send data to backend
         try {
-          const res = await axiosSecure.post(
-            `/payments`,
-            charityData
-          );
+          const res = await axiosSecure.post(`/payments`, charityData);
 
           if (res.data.insertedId) {
             Swal.fire({
@@ -76,6 +71,7 @@ const StripeForm = ({ charityInfo }) => {
               icon: "success",
               confirmButtonText: "OK",
             });
+            navigate("/dashboard/home");
           } else {
             Swal.fire({
               title: "Payment Failed",
@@ -86,11 +82,20 @@ const StripeForm = ({ charityInfo }) => {
           }
         } catch (err) {
           console.error("Payment backend error:", err);
-          Swal.fire({
-            title: "Server Error",
-            text: "Something went wrong while saving your payment.",
-            icon: "error",
-          });
+
+          if (err.response && err.response.status === 400) {
+            Swal.fire({
+              icon: "error",
+              title: "Payment Exists",
+              text: err.response.data.message, // "Payment already exists for this user"
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Payment Failed",
+              text: "Something went wrong. Please try again.",
+            });
+          }
         } finally {
           setProcessing(false);
         }
@@ -109,7 +114,9 @@ const StripeForm = ({ charityInfo }) => {
         disabled={!stripe || processing}
         className="btn btn-primary w-full text-white font-semibold"
       >
-        {processing ? "Processing..." : `Pay Now $${charityInfo?.payment_amount}`}
+        {processing
+          ? "Processing..."
+          : `Pay Now $${charityInfo?.payment_amount}`}
       </button>
 
       {error && <div className="text-red-500 text-sm">{error}</div>}

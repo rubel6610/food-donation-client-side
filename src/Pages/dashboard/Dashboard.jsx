@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import DashboardAside from './DashboardAside';
 import { Outlet } from 'react-router';
+import Navbar from './../../Components/Navbar';
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
+    <>
+    
+    
     <div className="flex">
       {/* Sidebar */}
       <DashboardAside isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
@@ -24,6 +28,7 @@ const DashboardLayout = () => {
 
       </div>
     </div>
+    </>
   );
 };
 

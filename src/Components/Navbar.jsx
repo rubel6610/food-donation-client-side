@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router";
 
 import { FaBars, FaUserCircle } from "react-icons/fa";
 import UseAuth from "../hooks/UseAuth";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const { user, logout } = UseAuth();
@@ -11,7 +12,7 @@ const Navbar = () => {
       {user && (
         <>
           <li><NavLink to="/donations" className="font-semibold">All Donations</NavLink></li>
-          <li><NavLink to="/dashboard/home" className="font-semibold">Dashboard</NavLink></li>
+          <li><NavLink to="/dashboard/profile" className="font-semibold">Dashboard</NavLink></li>
         </>
       )}
       {!user && <li><NavLink to="/login" className="font-semibold">Login</NavLink></li>}
@@ -33,9 +34,7 @@ const Navbar = () => {
             {navItems}
           </ul>
         </div>
-        <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-primary">
-          <span  className="hidden sm:inline">FoodSave</span>
-        </Link>
+      <Logo/>
       </div>
 
       <div className="navbar-center hidden lg:flex">

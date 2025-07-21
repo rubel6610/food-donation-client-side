@@ -1,20 +1,29 @@
-import { NavLink } from "react-router";
-import { FaHome, FaUser, FaRibbon, FaStar, FaRegCommentDots, FaCreditCard, FaCog } from "react-icons/fa";
+import { FaSignOutAlt } from "react-icons/fa";
 import UseAuth from "../../hooks/UseAuth";
+import Logo from "../../Components/Logo";
+import UseRole from "../../hooks/UseRole";
+import AdminDashboard from "./RoleDashboard/AdminDashboard";
+import CharityDashboard from "./RoleDashboard/CharityDashboard";
+import UserDashboard from "./RoleDashboard/UserDashboard";
 
 const DashboardAside = ({ isOpen, setIsOpen }) => {
   const { logout } = UseAuth();
+  const { role, isRoleLoading } = UseRole();
 
   const handleLogout = async () => {
-    await logout();
+    try {
+      await logout();
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   return (
     <aside
-      className={`fixed lg:static top-0 left-0 h-full w-64 bg-gradient-to-br from-green-100 via-green-200 to-yellow-100 shadow-xl p-6 rounded-r-3xl flex flex-col gap-8 z-50 transition-transform duration-300 ease-in-out
-      ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 min-h-screen`}
+      className={`fixed lg:static top-0 left-0 h-full w-64 bg-gradient-to-br from-green-100 via-green-200 to-yellow-100 shadow-xl p-4  rounded-r-3xl flex flex-col z-50 transition-transform duration-300 ease-in-out
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 min-h-screen`}
     >
-      {/* Close button for mobile */}
+      {/* Mobile Close Button */}
       <div className="lg:hidden flex justify-end mb-2">
         <button
           onClick={() => setIsOpen(false)}
@@ -24,129 +33,31 @@ const DashboardAside = ({ isOpen, setIsOpen }) => {
         </button>
       </div>
 
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-green-700 font-serif mb-2">
+      {/* Logo + Title */}
+      <div className="space-y-2 mb-2 text-center">
+        <Logo />
+        <h2 className="text-2xl font-bold text-green-700 font-serif">
           Dashboard
         </h2>
         <p className="text-gray-500 text-sm">Welcome to your control panel</p>
       </div>
 
-      <nav>
-        <ul className="flex flex-col gap-4">
-          <li>
-            <NavLink
-              to="/dashboard/home"
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-                  isActive
-                    ? "bg-green-600 text-white shadow"
-                    : "hover:bg-green-200 text-green-700"
-                }`
-              }
-            >
-              <FaHome /> Overview
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/profile"
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-                  isActive
-                    ? "bg-green-600 text-white shadow"
-                    : "hover:bg-green-200 text-green-700"
-                }`
-              }
-            >
-              <FaUser /> My Profile
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/request-charity-role"
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-                  isActive
-                    ? "bg-green-600 text-white shadow"
-                    : "hover:bg-green-200 text-green-700"
-                }`
-              }
-            >
-              <FaRibbon /> Be a Charity
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/favorites"
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-                  isActive
-                    ? "bg-green-600 text-white shadow"
-                    : "hover:bg-green-200 text-green-700"
-                }`
-              }
-            >
-              <FaStar /> Favorites
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/reviews"
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-                  isActive
-                    ? "bg-green-600 text-white shadow"
-                    : "hover:bg-green-200 text-green-700"
-                }`
-              }
-            >
-              <FaRegCommentDots /> My Reviews
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/transactions"
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-                  isActive
-                    ? "bg-green-600 text-white shadow"
-                    : "hover:bg-green-200 text-green-700"
-                }`
-              }
-            >
-              <FaCreditCard /> Transaction History
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/settings"
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-                  isActive
-                    ? "bg-green-600 text-white shadow"
-                    : "hover:bg-green-200 text-green-700"
-                }`
-              }
-            >
-              <FaCog /> Settings
-            </NavLink>
-          </li>
+      {/* Navigation */}
+      <nav className="flex-1 mt-4">
+        <ul className="flex flex-col">
+          {!isRoleLoading && role === "user" && <UserDashboard setIsOpen={setIsOpen} />}
+          {!isRoleLoading && role === "charity" && <CharityDashboard setIsOpen={setIsOpen} />}
+          {!isRoleLoading && role === "admin" && <AdminDashboard setIsOpen={setIsOpen} />}
         </ul>
       </nav>
 
+      {/* Logout */}
       <div className="mt-auto">
         <button
           onClick={handleLogout}
-          className="btn btn-outline btn-error w-full"
+          className="btn btn-outline btn-error w-full flex items-center justify-center gap-2"
         >
-          Logout
+          <FaSignOutAlt /> Logout
         </button>
       </div>
     </aside>
