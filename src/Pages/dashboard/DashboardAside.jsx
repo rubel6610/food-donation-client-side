@@ -5,6 +5,7 @@ import UseRole from "../../hooks/UseRole";
 import AdminDashboard from "./RoleDashboard/AdminDashboard";
 import CharityDashboard from "./RoleDashboard/CharityDashboard";
 import UserDashboard from "./RoleDashboard/UserDashboard";
+import RestaurantDashboard from "./RoleDashboard/RestaurantDashboard";
 
 const DashboardAside = ({ isOpen, setIsOpen }) => {
   const { logout } = UseAuth();
@@ -48,6 +49,8 @@ const DashboardAside = ({ isOpen, setIsOpen }) => {
           {!isRoleLoading && role === "user" && <UserDashboard setIsOpen={setIsOpen} />}
           {!isRoleLoading && role === "charity" && <CharityDashboard setIsOpen={setIsOpen} />}
           {!isRoleLoading && role === "admin" && <AdminDashboard setIsOpen={setIsOpen} />}
+          {!isRoleLoading && role === "restaurant" && <RestaurantDashboard setIsOpen={setIsOpen} />}
+       
         </ul>
       </nav>
 

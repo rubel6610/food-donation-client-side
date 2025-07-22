@@ -29,7 +29,7 @@ const Transaction = () => {
         <thead className="bg-base-200">
           <tr>
             <th>#</th>
-            <th>Date</th>
+            <th>Request Date</th>
             <th>Transaction ID</th>
             <th>Amount</th>
             <th>Status</th>
@@ -54,7 +54,7 @@ const Transaction = () => {
                 <td>
                   <span
                     className={`badge ${
-                      payment.status === "success"
+                      payment.status === "approved"
                         ? "badge-success"
                         : "badge-error"
                     }`}

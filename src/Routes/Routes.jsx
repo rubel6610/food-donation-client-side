@@ -4,7 +4,7 @@ import Home from "../HomeLayout/Home";
 import PrivateRoutes from "./PrivateRoutes";
 import AuthLayout from "../Pages/Authentication/AuthLayout";
 import DashBoardHome from "../Pages/dashboard/DashBoardHome";
-import Dashboard from "../Pages/dashboard/Dashboard";
+import Dashboard from "../Pages/dashboard/DashboardLayout";
 import UserProfile from "../Pages/dashboard/Profile/UserProfile";
 import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
@@ -13,9 +13,14 @@ import StripeForm from "./../Pages/Stripe/StripeForm";
 import PrivateCharityRoutes from "./PrivateCharityRoutes";
 import Transaction from "../Pages/dashboard/transactionHistory/Transaction";
 import PrivateAdminRoutes from "./PrivateAdminRoutes";
-import PendingTransaction from "../Pages/dashboard/transactionHistory/PendingTransaction";
-import Users from "../Pages/ManageUsers/Users";
-
+import PendingCharityRole from "../Pages/dashboard/transactionHistory/PendingCharityRole";
+import DashboardLayout from "../Pages/dashboard/DashboardLayout";
+import AddDonation from "../Pages/Restaurant/AddDonation";
+import ManageUsers from "../Pages/Admin/ManageUsers";
+import ManageDonations from "../Pages/Admin/ManageDonations";
+import MyDonations from "../Pages/Restaurant/MyDonations";
+import UpdateDonation from "../Pages/Restaurant/UpdateDonation";
+import PrivateRestaurantRoutes from './PrivateRestaurantRoutes';
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -45,7 +50,7 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: (
       <PrivateRoutes>
-        <Dashboard />
+        <DashboardLayout />
       </PrivateRoutes>
     ),
     children: [
@@ -73,29 +78,60 @@ export const router = createBrowserRouter([
           </PrivateRoutes>
         ),
       },
-      {
-        path: "stripe-payment",
-        element: (
-          <PrivateRoutes>
-            <StripeForm />
-          </PrivateRoutes>
-        ),
-      },
+      // admin routes
       {
         path: "pending-transactions",
         element: (
           <PrivateAdminRoutes>
-            <PendingTransaction />
+            <PendingCharityRole />
           </PrivateAdminRoutes>
         ),
       },
       {
         path: "users",
-        element:<PrivateAdminRoutes><Users/></PrivateAdminRoutes>,
+        element: (
+          <PrivateAdminRoutes>
+            <ManageUsers />
+          </PrivateAdminRoutes>
+        ),
       },
       {
         path: "charity-role-requests",
-        element:<PrivateAdminRoutes><PendingTransaction/></PrivateAdminRoutes>,
+        element: (
+          <PrivateAdminRoutes>
+            <PendingCharityRole />
+          </PrivateAdminRoutes>
+        ),
+      },
+      {
+        path:"manage-donations",
+        element:<ManageDonations/>
+      },
+
+      // restaurant routes
+      {
+        path: "add-donation",
+        element: <PrivateRestaurantRoutes><AddDonation /></PrivateRestaurantRoutes> ,
+      },
+      {
+        path: "my-donations",
+        element:<PrivateRestaurantRoutes><MyDonations /></PrivateRestaurantRoutes> ,
+      },
+      {
+        path:"update-donation/:id",
+        element:<PrivateRestaurantRoutes><UpdateDonation/></PrivateRestaurantRoutes> ,
+        loader:({params})=>fetch(`${import.meta.env.VITE_BASE_URL}/donation/${params.id}`),
+      },
+
+
+      // charity routes
+      {
+        path: "stripe-payment",
+        element: (
+          <PrivateCharityRoutes>
+            <StripeForm />
+          </PrivateCharityRoutes>
+        ),
       },
       {
         path: "transactions",

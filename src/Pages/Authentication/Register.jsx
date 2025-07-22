@@ -38,25 +38,27 @@ const Register = () => {
     );
 
     const imageUrl = imageRes.data.data.display_url;
-    const userData = {
-      name: data.name,
-      email: data.email,
-      mobile: data.mobile,
-      photoURL: imageUrl,
-      createdAt: new Date().toISOString(),
-      role: "user",
-    };
 
     try {
-      await createUser(data.email, data.password);
+      const response = await createUser(data.email, data.password);
       userUpdateProfile({
         displayName: data.name,
         photoURL: imageUrl,
       });
+      const userData = {
+        name: data.name,
+        email: data.email,
+        mobile: data.mobile,
+        photoURL: imageUrl,
+        createdAt: new Date().toISOString(),
+        role: "user",
+        userId: response.user.uid,
+      };
+
       await axiosSecure.post("/users", userData);
       Swal.fire("Success", "Your account has been created", "success");
 
-      navigate("/dashboard/home");
+      navigate("/dashboard/profile");
     } catch (error) {
       console.error(error);
       Swal.fire("Error", error.message || "Registration failed", "error");
@@ -64,28 +66,28 @@ const Register = () => {
   };
 
   const handleGoogleRegister = async () => {
-   
-      loginWithGoogle().then(async (res) => {
-        const user = res.user;
-        const userData = {
-          name: user.displayName,
-          email: user.email,
-          mobile: "",
-          photoURL: user.photoURL,
-          createdAt: new Date().toISOString(),
-          role: "user",
-        };
+    loginWithGoogle().then(async (res) => {
+      const user = res.user;
+      const userData = {
+        name: user.displayName,
+        email: user.email,
+        mobile: "",
+        photoURL: user.photoURL,
+        createdAt: new Date().toISOString(),
+        role: "user",
+        userId: user.uid,
+      };
 
-        try {
-          await axiosSecure.post("/users", userData);
-          Swal.fire("Success", "You have registered with Google", "success");
-          navigate("/dashboard/home");
-        } catch (error) {
-          console.error(error);
-          Swal.fire("Error", error.message || "Registration failed", "error");
-        }
-      });
-   };
+      try {
+        await axiosSecure.post("/users", userData);
+        Swal.fire("Success", "You have registered with Google", "success");
+        navigate("/dashboard/profile");
+      } catch (error) {
+        console.error(error);
+        Swal.fire("Error", error.message || "Registration failed", "error");
+      }
+    });
+  };
 
   return (
     <div className="w-full md:w-1/2 max-w-md bg-base-300 rounded-xl p-8 shadow-xl border border-base-200">

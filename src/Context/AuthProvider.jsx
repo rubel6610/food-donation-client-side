@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from "react";
 import {
   onAuthStateChanged,
   signOut,
@@ -7,8 +7,9 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
-} from 'firebase/auth';
+} from "firebase/auth";
 import auth from "../Firebase/firebase.init";
+import axios from "axios";
 
 export const authContext = createContext();
 
@@ -55,10 +56,9 @@ const AuthProvider = ({ children }) => {
 
   // Update Profile
   const userUpdateProfile = (profile) => {
-    return updateProfile(auth.currentUser, profile)
-      .catch((err) => {
-        console.error("Profile update error:", err);
-      });
+    return updateProfile(auth.currentUser, profile).catch((err) => {
+      console.error("Profile update error:", err);
+    });
   };
 
   // Sign-Out
@@ -76,12 +76,27 @@ const AuthProvider = ({ children }) => {
       });
   };
 
-  // Auth State Listener
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+      if (currentUser) {
+        const idToken = await currentUser.getIdToken();
+        try {
+          const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/jwt`, {
+            token: idToken,
+          });
+          localStorage.setItem("access-token", res.data.token);
+        } catch (error) {
+          console.error("JWT fetch failed", error);
+          localStorage.removeItem("access-token");
+        }
+      } else {
+    
+        localStorage.removeItem("access-token");
+      }
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -96,9 +111,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <authContext.Provider value={authData}>
-      {children}
-    </authContext.Provider>
+    <authContext.Provider value={authData}>{children}</authContext.Provider>
   );
 };
 

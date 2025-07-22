@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import UseAuth from "../../../hooks/UseAuth";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import StripeForm from "./../../Stripe/StripeForm";
+import StripeForm from "../../Stripe/StripeForm";
 
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);

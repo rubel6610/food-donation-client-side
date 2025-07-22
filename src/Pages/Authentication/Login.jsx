@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
 import UseAuth from '../../hooks/UseAuth';
 import { FcGoogle } from 'react-icons/fc';
+import { getAdditionalUserInfo } from 'firebase/auth';
 
 const Login = () => {
   const { login, loginWithGoogle } = UseAuth();
@@ -11,9 +12,12 @@ const Login = () => {
 
  const onSubmit = async (data) => {
   try {
-    await login(data.email, data.password);
-    Swal.fire('Success!', 'Logged in successfully', 'success');
-    navigate('/dashboard');
+    const res = await login(data.email, data.password);
+   if(res || res.user){
+     Swal.fire('Success!', 'Logged in successfully', 'success');
+    navigate('/dashboard/profile');
+   }
+   
   } catch (error) {
     console.error(error);
     if (error.code === 'auth/wrong-password') {
@@ -29,9 +33,17 @@ const Login = () => {
 
   const handleGoogle = async () => {
     try {
-      await loginWithGoogle();
-      Swal.fire('Success!', 'Logged in with Google', 'success');
-      navigate('/dashboard');
+    const res =  await loginWithGoogle();
+    const userInfo = getAdditionalUserInfo(res);
+    if(userInfo?.isNewUser){
+      await res.user.delete();
+      Swal.fire('Error!', 'No account found. Please register first.', 'error');
+      return;
+    }
+    
+     Swal.fire('Success!', 'Logged in successfully', 'success');
+    navigate('/dashboard/profile');
+   
     } catch (error) {
       console.log(error);
       Swal.fire('Error!', 'Google sign-in failed', 'error');

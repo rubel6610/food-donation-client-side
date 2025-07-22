@@ -1,17 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router";
-import {
-  FaUser,
-  FaClipboardList,
-  FaTruck,
-  FaGift,
-  FaReceipt,
-} from "react-icons/fa";
+import { FaUser, FaPlusCircle, FaListAlt, FaHandsHelping } from "react-icons/fa";
 
-const CharityDashboard = ({ setIsOpen }) => {
+const RestaurantDashboard = ({ setIsOpen }) => {
   return (
     <div>
-      {/* Charity Profile */}
+      {/* Restaurant Profile */}
       <li>
         <NavLink
           to="/dashboard/profile"
@@ -24,14 +18,14 @@ const CharityDashboard = ({ setIsOpen }) => {
             }`
           }
         >
-          <FaUser /> Charity Profile
+          <FaUser /> Restaurant Profile
         </NavLink>
       </li>
 
-      {/* My Requests */}
+      {/* Add Donation */}
       <li>
         <NavLink
-          to="/dashboard/my-requests"
+          to="/dashboard/add-donation"
           onClick={() => setIsOpen(false)}
           className={({ isActive }) =>
             `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
@@ -41,14 +35,14 @@ const CharityDashboard = ({ setIsOpen }) => {
             }`
           }
         >
-          <FaClipboardList /> My Requests
+          <FaPlusCircle /> Add Donation
         </NavLink>
       </li>
 
-      {/* My Pickups */}
+      {/* My Donations */}
       <li>
         <NavLink
-          to="/dashboard/my-pickups"
+          to="/dashboard/my-donations"
           onClick={() => setIsOpen(false)}
           className={({ isActive }) =>
             `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
@@ -58,14 +52,14 @@ const CharityDashboard = ({ setIsOpen }) => {
             }`
           }
         >
-          <FaTruck /> My Pickups
+          <FaListAlt /> My Donations
         </NavLink>
       </li>
 
-      {/* Received Donations */}
+      {/* Requested Donations */}
       <li>
         <NavLink
-          to="/dashboard/received-donations"
+          to="/dashboard/requested-donations"
           onClick={() => setIsOpen(false)}
           className={({ isActive }) =>
             `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
@@ -75,28 +69,11 @@ const CharityDashboard = ({ setIsOpen }) => {
             }`
           }
         >
-          <FaGift /> Received Donations
-        </NavLink>
-      </li>
-
-      {/* Transaction History */}
-      <li>
-        <NavLink
-          to="/dashboard/transactions"
-          onClick={() => setIsOpen(false)}
-          className={({ isActive }) =>
-            `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-              isActive
-                ? "bg-green-600 text-white shadow"
-                : "hover:bg-green-200 text-green-700"
-            }`
-          }
-        >
-          <FaReceipt /> Transaction History
+          <FaHandsHelping /> Requested Donations
         </NavLink>
       </li>
     </div>
   );
 };
 
-export default CharityDashboard;
+export default RestaurantDashboard;

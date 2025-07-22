@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingPage from "../../../components/LoadingPage";
 import Swal from "sweetalert2";
 
-const PendingTransaction = () => {
+const PendingCharityRole = () => {
   const axiosSecure = UseAxiosSecure();
   const { user } = UseAuth();
   const { data: payments = [], isLoading } = useQuery({
@@ -58,7 +58,7 @@ const PendingTransaction = () => {
           {payments.length === 0 ? (
             <tr>
               <td colSpan={5} className="text-center text-gray-500">
-                No transactions found.
+                No request found.
               </td>
             </tr>
           ) : (
@@ -100,4 +100,4 @@ const PendingTransaction = () => {
   );
 };
 
-export default PendingTransaction;
+export default PendingCharityRole;
