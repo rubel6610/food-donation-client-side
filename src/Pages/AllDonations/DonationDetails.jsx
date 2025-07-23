@@ -5,14 +5,16 @@ import { MdOutlineRateReview } from "react-icons/md";
 import useAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import UseRole from "../../hooks/UseRole";
-import RequestDonationModal from "./RequestDonationModal";
+import RequestDonationModal from "../charity/RequestDonationModal";
+import AddReviewModal from "../Reviews/AddReviewModal";
+import Reviews from "../Reviews/Reviews";
 
 const DonationDetails = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { role } = UseRole();
   const [openModal, setOpenModal] = useState(false);
-
+  const [openReviewModal, setOpenReviewModal] = useState(false);
   const { data: donation = {} } = useQuery({
     queryKey: ["donationDetails"],
     queryFn: async () => {
@@ -86,11 +88,11 @@ const DonationDetails = () => {
 
             <button
               className={`btn btn-success w-full  ${
-                donation !== "accepted" && role !== "charity" && "hidden"
+                donation.status !== "accepted" && role !== "charity" && "hidden"
               }`}
             >
               <span className="mr-2 flex items-center gap-2">
-                {donation === "accepted" ? (
+                {donation.status === "accepted" ? (
                   <>
                     <FaCheckCircle size={16} /> Picked Up{" "}
                   </>
@@ -100,32 +102,26 @@ const DonationDetails = () => {
                 Confirm Pickup
               </span>
             </button>
-            {role !== "admin"  && role !== "restaurant" &&  (
-              <button
-                onClick={() => setOpenModal("review")}
-                className="btn btn-outline btn-info w-full"
-              >
-                <MdOutlineRateReview className="mr-2" /> Add Review
-              </button>
+            {role !== "admin" && role !== "restaurant" && (
+              <>
+                <button
+                  onClick={() => setOpenReviewModal(true)}
+                  className="btn btn-outline btn-info w-full"
+                >
+                  <MdOutlineRateReview className="mr-2" /> Add Review
+                </button>
+                <AddReviewModal
+                  openReviewModal={openReviewModal}
+                  onClose={() => setOpenReviewModal(false)}
+                  donation={donation}
+                />
+              </>
             )}
           </div>
         </div>
       </div>
-
-      {/* Reviews Section */}
-      <div className="mt-10">
-        <h3 className="text-xl font-semibold mb-4">Reviews</h3>
-        <div className="space-y-4">
-          {/* Dummy review card */}
-          <div className="border p-4 rounded-lg bg-base-200">
-            <p className="font-bold">Md Rubel</p>
-            <p className="text-yellow-500">⭐⭐⭐⭐⭐</p>
-            <p className="text-gray-600">
-              Very generous donation. Highly appreciated!
-            </p>
-          </div>
-        </div>
-      </div>
+      {/* Reviews content */}
+      <Reviews />
     </div>
   );
 };

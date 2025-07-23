@@ -14,6 +14,8 @@ const RequestDonationModal = ({ donation, openModal, onClose }) => {
     setLoading(true);
     const requestData = {
       donationId: donation._id,
+      foodType:donation.foodType,
+      quantity:donation.quantity,
       donationTitle: donation.title,
       restaurantName: donation.restaurantName,
       restaurantEmail: donation.restaurantEmail,

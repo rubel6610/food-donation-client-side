@@ -24,6 +24,8 @@ import PrivateRestaurantRoutes from './PrivateRestaurantRoutes';
 import NotFound from "../Pages/NotFoundPage/NotFound";
 import AllDonations from "../Pages/AllDonations/AllDonations";
 import DonationDetails from "../Pages/AllDonations/DonationDetails";
+import MyReviews from "../Pages/Reviews/MyReviews";
+import MyDonationRequest from "../Pages/charity/MyDonationRequest";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -89,6 +91,15 @@ export const router = createBrowserRouter([
           </PrivateRoutes>
         ),
       },
+      {
+        path: "reviews",
+        element: (
+          <PrivateRoutes>
+            <MyReviews />
+          </PrivateRoutes>
+        ),
+      },
+
       // admin routes
       {
         path: "pending-transactions",
@@ -148,6 +159,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateCharityRoutes>
             <Transaction />
+          </PrivateCharityRoutes>
+        ),
+      },
+      {
+        path: "my-requests",
+        element: (
+          <PrivateCharityRoutes>
+            <MyDonationRequest/>
           </PrivateCharityRoutes>
         ),
       },
