@@ -21,6 +21,9 @@ import ManageDonations from "../Pages/Admin/ManageDonations";
 import MyDonations from "../Pages/Restaurant/MyDonations";
 import UpdateDonation from "../Pages/Restaurant/UpdateDonation";
 import PrivateRestaurantRoutes from './PrivateRestaurantRoutes';
+import NotFound from "../Pages/NotFoundPage/NotFound";
+import AllDonations from "../Pages/AllDonations/AllDonations";
+import DonationDetails from "../Pages/AllDonations/DonationDetails";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -30,6 +33,14 @@ export const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+      {
+        path:"donations",
+        element:<PrivateRoutes><AllDonations/></PrivateRoutes>
+      },
+      {
+        path:"donation-details/:id",
+        element:<PrivateRoutes><DonationDetails></DonationDetails></PrivateRoutes>,
+      }
     ],
   },
   {
@@ -120,7 +131,6 @@ export const router = createBrowserRouter([
       {
         path:"update-donation/:id",
         element:<PrivateRestaurantRoutes><UpdateDonation/></PrivateRestaurantRoutes> ,
-        loader:({params})=>fetch(`${import.meta.env.VITE_BASE_URL}/donation/${params.id}`),
       },
 
 
@@ -143,4 +153,9 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:"*",
+    element:<NotFound/>
+
+  }
 ]);

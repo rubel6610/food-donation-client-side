@@ -4,6 +4,7 @@ import UseAxiosSecure from '../../hooks/UseAxiosSecure';
 import UseAuth from '../../hooks/UseAuth';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
+import LoadingPage from '../../components/LoadingPage';
 
 const MyDonations = () => {
   const axiosSecure = UseAxiosSecure();
@@ -46,7 +47,16 @@ const MyDonations = () => {
     navigate(`/dashboard/update-donation/${id}`);
   };
 
-  if (isLoading) return <p className="text-center my-10">Loading your donations...</p>;
+  if (isLoading) return <LoadingPage/>
+  if (donations.length === 0) {
+  return (
+    <div className="text-center mt-16">
+      <h2 className="text-2xl font-semibold text-gray-600">
+        You haven&apos;t donated anything yet.
+      </h2>
+    </div>
+  );
+}
 
   return (
     <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

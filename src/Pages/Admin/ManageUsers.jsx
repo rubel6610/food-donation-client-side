@@ -12,7 +12,7 @@ const ManageUsers = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["users", !!search],
+    queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
       return res.data;
@@ -91,7 +91,7 @@ const ManageUsers = () => {
         </thead>
         <tbody>
           {filteredUsers.map((user, idx) => (
-            <tr key={user._id} className="hover:bg-secondary">
+            <tr key={user._id} className="hover:bg-gray-100">
               <td>{idx + 1}</td>
               <td>{user.name || "N/A"}</td>
               <td>{user.email}</td>
@@ -156,7 +156,10 @@ const ManageUsers = () => {
         </tbody>
       </table>
 
-      {isLoading && <p className="text-center mt-4">Loading users...</p>}
+      {isLoading &&   <div className="flex justify-center items-center mt-4">
+      <span className="loading loading-spinner text-secondary loading-md"></span>
+      <p className="ml-2 text-secondary">Searching...</p>
+    </div>}
     </div>
   );
 };

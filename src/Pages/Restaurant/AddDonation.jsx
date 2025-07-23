@@ -8,8 +8,10 @@ import UseAuth from "../../hooks/UseAuth";
 import axios from "axios";
 import useAxiosSecure from "../../hooks/UseAxiosSecure";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const AddDonation = () => {
+  const navigate = useNavigate();
   const { user } = UseAuth();
   const axiosSecure = useAxiosSecure();
   const {
@@ -30,9 +32,8 @@ const AddDonation = () => {
       restaurantEmail,
       restaurantName,
     } = data;
-    const img = image[0];
     const formData = new FormData();
-    formData.append("image", img);
+    formData.append("image", image[0]);
     const imageRes = await axios.post(
       `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
       formData
@@ -49,6 +50,7 @@ const AddDonation = () => {
       location,
       imageUrl,
       status: "pending",
+      donated_At:new Date(),
     };
     try {
       const res = await axiosSecure.post("/donations", donations);
@@ -61,6 +63,7 @@ const AddDonation = () => {
           timer: 2500,
           showConfirmButton: false,
         });
+        navigate("/dashboard/my-donations")
       }
     } catch (error) {
       console.error("Donation submission error:", error);

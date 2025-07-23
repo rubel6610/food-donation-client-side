@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import UseAxiosSecure from '../../hooks/UseAxiosSecure';
 import Swal from 'sweetalert2';
+import LoadingPage from '../../components/LoadingPage';
 
 const ManageDonations = () => {
   const axiosSecure = UseAxiosSecure();
@@ -31,7 +32,7 @@ const ManageDonations = () => {
     try {
       const res = await axiosSecure.patch(`/donations/reject/${id}`, { status: 'rejected' });
       if (res.data.modifiedCount > 0) {
-        Swal.fire('Rejected!', 'Donation has been rejected.', 'info');
+        Swal.fire('Rejected!', 'Donation has been rejected.', 'success');
         refetch();
       }
     } catch (error) {
@@ -40,8 +41,7 @@ const ManageDonations = () => {
     }
   };
 
-  if (isLoading) return <p className="text-center my-10">Loading donations...</p>;
-
+  if (isLoading) return <LoadingPage/>
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4 text-center">Manage Donations</h2>

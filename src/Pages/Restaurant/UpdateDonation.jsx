@@ -1,42 +1,79 @@
-import React, { useEffect } from 'react';
-import { useParams, useNavigate, useLoaderData } from 'react-router';
-import { useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
-import useAxiosSecure from '../../hooks/UseAxiosSecure';
-import { TbShoppingBagPlus } from 'react-icons/tb';
-import { MdEmail, MdFastfood, MdLocationOn } from 'react-icons/md';
-import { FaRegClock, FaUserAlt } from 'react-icons/fa';
-import { IoIosImages } from 'react-icons/io';
+import React, { useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/UseAxiosSecure";
+import { TbShoppingBagPlus } from "react-icons/tb";
+import { MdEditNote, MdEmail, MdFastfood, MdLocationOn } from "react-icons/md";
+import { FaRegClock, FaUserAlt } from "react-icons/fa";
+import { IoIosImages } from "react-icons/io";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const UpdateDonation = () => {
-
-  const { id } = useParams(); // donation ID from URL
+  const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-const data = useLoaderData();
-console.log(data);
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
- 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const { data: donation = {} } = useQuery({
+    queryKey: ["donation", id],
+    queryFn: async () => {
+      const res = await axiosSecure(`/donation/${id}`);
+      return res.data;
+    },
+  });
+  useEffect(() => {
+    if (donation) {
+      reset(donation);
+    }
+  }, [donation, reset]);
+
   const onSubmit = async (data) => {
+    let imageUrl = donation.imageUrl;
+    const formData = new FormData();
+    formData.append("image", data.image[0]);
+    if (data.image && data.image[0]) {
+      const imageRes = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+        formData
+      );
+      imageUrl = imageRes.data.data.display_url;
+    }
+
+    const updatedData = {
+      imageUrl,
+      title: data.title,
+      foodType: data.foodType,
+      location: data.location,
+      quantity: data.quantity,
+      pickupTime: data.pickupTime,
+    };
+
     try {
-      const res = await axiosSecure.patch(`/donations/${id}`, data);
+      const res = await axiosSecure.patch(`/donations/${id}`, updatedData);
 
       if (res.data.modifiedCount > 0) {
-        Swal.fire('Updated!', 'Donation updated successfully.', 'success');
-        navigate('/dashboard/my-donations');
+        Swal.fire("Updated!", "Donation updated successfully.", "success");
+        reset();
+        navigate("/dashboard/my-donations");
       } else {
-        Swal.fire('No Change!', 'No updates were made.', 'info');
+        Swal.fire("No Change!", "No updates were made.", "info");
       }
     } catch (error) {
-      console.error('Update error:', error);
-      Swal.fire('Error!', 'Failed to update donation.', 'error');
+      console.error("Update error:", error);
+      Swal.fire("Error!", "Failed to update donation.", "error");
     }
   };
 
   return (
     <div className="max-w-3xl mx-auto my-10 p-8 bg-green-100 rounded-xl shadow-lg">
       <h2 className="text-2xl font-bold text-center text-green-800 mb-6 flex items-center justify-center gap-2">
-        <TbShoppingBagPlus className="text-3xl" /> Add a Donation
+        <MdEditNote className="text-3xl" /> Update Your Donation
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -119,7 +156,6 @@ console.log(data);
             <input
               {...register("restaurantName")}
               type="text"
-              defaultValue="{displayName}"
               readOnly
               className="input input-bordered w-full bg-gray-100 text-black"
             />
@@ -133,7 +169,6 @@ console.log(data);
             <input
               {...register("restaurantEmail")}
               type="email"
-              defaultValue="{user?.email}"
               readOnly
               className="input input-bordered w-full bg-gray-100 text-black"
             />
@@ -163,9 +198,7 @@ console.log(data);
           <div className="flex items-center gap-3">
             <IoIosImages className="text-xl text-green-700" />
             <input
-              {...register("image", {
-                required: "Image is required",
-              })}
+              {...register("image")}
               type="file"
               accept="image/*"
               className="file-input file-input-bordered w-full bg-white text-black"
