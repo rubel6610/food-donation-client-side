@@ -16,6 +16,7 @@ const RequestDonationModal = ({ donation, openModal, onClose }) => {
       donationId: donation._id,
       foodType:donation.foodType,
       quantity:donation.quantity,
+      imageUrl:donation.imageUrl,
       donationTitle: donation.title,
       restaurantName: donation.restaurantName,
       restaurantEmail: donation.restaurantEmail,
@@ -24,7 +25,7 @@ const RequestDonationModal = ({ donation, openModal, onClose }) => {
       requestDescription: data.requestDescription,
       pickupTime: data.pickupTime,
       status: "pending",
-      requestedAt: new Date(),
+      requestedAt: new Date().toISOString(),
     };
 
     try {

@@ -54,33 +54,47 @@ const MyDonationRequest = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {requests.map((req) => (
-            <div key={req._id} className="border p-4 rounded-lg shadow bg-white">
-              <h3 className="text-lg font-semibold mb-1">{req.donationTitle}</h3>
-              <p className="text-sm text-gray-600 mb-1">Restaurant: {req.restaurantName}</p>
-              <p className="text-sm text-gray-600 mb-1">Food Type: {req.foodType}</p>
-              <p className="text-sm text-gray-600 mb-1">Quantity: {req.quantity}</p>
-              <p className="text-sm font-medium">
-                Status:{" "}
-                <span
-                  className={`${
-                    req.status === "Pending"
-                      ? "text-yellow-600"
-                      : req.status === "Accepted"
-                      ? "text-green-600"
-                      : "text-red-600"
-                  }`}
-                >
-                  {req.status}
-                </span>
-              </p>
+            <div key={req._id} className="border p-4 rounded-lg shadow bg-white flex flex-col md:flex-row gap-4">
+              {/* Left Side: Text Content */}
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold mb-1">{req.donationTitle}</h3>
+                <p className="text-sm text-gray-600 mb-1">Restaurant: {req.restaurantName}</p>
+                <p className="text-sm text-gray-600 mb-1">Food Type: {req.foodType}</p>
+                <p className="text-sm text-gray-600 mb-1">Quantity: {req.quantity}</p>
+                <p className="text-sm font-medium">
+                  Status:{" "}
+                  <span
+                    className={`${
+                      req.status === "Pending"
+                        ? "text-yellow-600"
+                        : req.status === "Accepted"
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }`}
+                  >
+                    {req.status}
+                  </span>
+                </p>
 
-              {req.status === "pending" && (
-                <button
-                  onClick={() => handleCancel(req._id)}
-                  className="mt-3 px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                >
-                  Cancel Request
-                </button>
+                {req.status === "pending" && (
+                  <button
+                    onClick={() => handleCancel(req._id)}
+                    className="mt-3 px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                  >
+                    Cancel Request
+                  </button>
+                )}
+              </div>
+
+              {/* Right Side: Image */}
+              {req.imageUrl && (
+                <div className="w-full md:w-32 h-32 overflow-hidden rounded-lg">
+                  <img
+                    src={req.imageUrl}
+                    alt="Food"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               )}
             </div>
           ))}
