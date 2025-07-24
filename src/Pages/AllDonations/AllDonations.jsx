@@ -34,7 +34,7 @@ const AllDonations = () => {
           <div className="card-body">
             <h2 className="card-title">{donation.title}</h2>
             <p><strong>Restaurant:</strong> {donation.restaurantName}</p>
-            <p><strong>Location:</strong> {donation.restaurantLocation}</p>
+            <p><strong>Location:</strong> {donation.location}</p>
             <p><strong>Charity:</strong> {donation.charityName || "Not Assigned"}</p>
             <p><strong>Quantity:</strong> {donation.quantity}</p>
             <p>

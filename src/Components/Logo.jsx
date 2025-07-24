@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { FaLeaf } from "react-icons/fa"; // or any icon you prefer
+import { MdFoodBank } from "react-icons/md"; // or any icon you prefer
 
 const Logo = () => {
   return (
@@ -7,7 +7,7 @@ const Logo = () => {
       to="/"
       className="group flex justify-center p-4 items-center gap-2 text-2xl font-extrabold text-accent transition-all duration-300 hover:scale-105 hover:drop-shadow-lg"
     >
-      <FaLeaf
+      <MdFoodBank
         className="text-green-500 group-hover:rotate-12 group-hover:text-lime-500 transition-transform duration-300"
         size={28}
       />

@@ -26,6 +26,8 @@ import AllDonations from "../Pages/AllDonations/AllDonations";
 import DonationDetails from "../Pages/AllDonations/DonationDetails";
 import MyReviews from "../Pages/Reviews/MyReviews";
 import MyDonationRequest from "../Pages/charity/MyDonationRequest";
+import ManageRequests from "../Pages/Admin/ManageRequests";
+import RequestedDonations from "../Pages/Restaurant/RequestedDonations";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -129,6 +131,10 @@ export const router = createBrowserRouter([
         path:"manage-donations",
         element:<ManageDonations/>
       },
+      {
+        path:"manage-requests",
+        element:<ManageRequests/>
+      },
 
       // restaurant routes
       {
@@ -142,6 +148,10 @@ export const router = createBrowserRouter([
       {
         path:"update-donation/:id",
         element:<PrivateRestaurantRoutes><UpdateDonation/></PrivateRestaurantRoutes> ,
+      },
+      {
+        path:"requested-donations",
+        element:<PrivateRestaurantRoutes><RequestedDonations/></PrivateRestaurantRoutes> ,
       },
 
 
