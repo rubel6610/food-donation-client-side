@@ -86,7 +86,7 @@ const RequestedDonations = () => {
                       {req.status}
                     </span>
                   </td>
-                  <td className="space-x-1">
+                  <td className="space-y-1">
                     {req.status === "pending" && (
                       <>
                         <button

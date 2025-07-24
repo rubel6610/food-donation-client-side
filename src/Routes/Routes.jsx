@@ -28,6 +28,7 @@ import MyReviews from "../Pages/Reviews/MyReviews";
 import MyDonationRequest from "../Pages/charity/MyDonationRequest";
 import ManageRequests from "../Pages/Admin/ManageRequests";
 import RequestedDonations from "../Pages/Restaurant/RequestedDonations";
+import MyPickups from "../Pages/charity/MyPickups";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -177,6 +178,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateCharityRoutes>
             <MyDonationRequest/>
+          </PrivateCharityRoutes>
+        ),
+      },
+      {
+        path: "my-pickups",
+        element: (
+          <PrivateCharityRoutes>
+            <MyPickups/>
           </PrivateCharityRoutes>
         ),
       },
