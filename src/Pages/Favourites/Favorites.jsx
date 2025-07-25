@@ -53,7 +53,7 @@ const Favorites = () => {
               className="w-full h-52 object-cover"
             />
           </figure>
-          <div className="card-body">
+          <div className="card-body relative">
             <h2 className="card-title">{donation.title}</h2>
             <p>
               <strong>Restaurant:</strong> {donation.restaurantName}
@@ -61,23 +61,22 @@ const Favorites = () => {
             <p>
               <strong>Location:</strong> {donation.location}
             </p>
-            <p>
+            <p  >
               <strong>Quantity:</strong> {donation.quantity}
             </p>
-            <p>
-              <strong>Status:</strong>{" "}
-              <span
-                className={`badge ${
-                  donation.status === "Picked Up"
-                    ? "badge-success"
-                    : donation.status === "Requested"
-                    ? "badge-warning"
-                    : "badge-info"
-                }`}
-              >
-                {donation.status}
-              </span>
-            </p>
+            <p className="absolute top-6 right-6">
+            <span
+              className={`ml-2 px-2 py-1 rounded text-white text-sm ${
+                donation.status === "verified" ? "bg-green-500" : "bg-gray-500"
+              }`}
+            >
+              {donation.status === "verified"
+                ? "Available"
+                : donation.status === "requested"
+                ? "Requested"
+                : "Picked Up"}
+            </span>
+          </p>
             <div className="flex  gap-2 mt-4">
               <Link
                 to={`/donation-details/${donation._id}`}
