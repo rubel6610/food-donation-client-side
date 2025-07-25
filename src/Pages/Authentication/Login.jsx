@@ -15,7 +15,7 @@ const Login = () => {
     const res = await login(data.email, data.password);
    if(res || res.user){
      Swal.fire('Success!', 'Logged in successfully', 'success');
-    navigate('/dashboard/profile');
+    navigate('/');
    }
    
   } catch (error) {
@@ -42,7 +42,7 @@ const Login = () => {
     }
     
      Swal.fire('Success!', 'Logged in successfully', 'success');
-    navigate('/dashboard/profile');
+    navigate('/');
    
     } catch (error) {
       console.log(error);

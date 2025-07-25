@@ -58,7 +58,7 @@ const Register = () => {
       await axiosSecure.post("/users", userData);
       Swal.fire("Success", "Your account has been created", "success");
 
-      navigate("/dashboard/profile");
+      navigate("/");
     } catch (error) {
       console.error(error);
       Swal.fire("Error", error.message || "Registration failed", "error");
@@ -81,7 +81,7 @@ const Register = () => {
       try {
         await axiosSecure.post("/users", userData);
         Swal.fire("Success", "You have registered with Google", "success");
-        navigate("/dashboard/profile");
+      navigate("/");
       } catch (error) {
         console.error(error);
         Swal.fire("Error", error.message || "Registration failed", "error");

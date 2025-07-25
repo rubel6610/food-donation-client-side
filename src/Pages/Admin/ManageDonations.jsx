@@ -17,7 +17,7 @@ const ManageDonations = () => {
 
   const handleVerify = async (id) => {
     try {
-      const res = await axiosSecure.patch(`/donations/verify/${id}`, { status: 'verified' });
+      const res = await axiosSecure.patch(`/donations/verify/${id}`, { status: 'verified', });
       if (res.data.modifiedCount > 0) {
         Swal.fire('Verified!', 'Donation has been verified.', 'success');
         refetch();

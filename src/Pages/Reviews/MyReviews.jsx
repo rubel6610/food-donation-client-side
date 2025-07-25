@@ -47,12 +47,12 @@ return (
       {reviews.length === 0 ? (
         <p className="text-gray-500">You haven't submitted any reviews yet.</p>
       ) : (
-        <div className="space-y-4">
+        <div className="max-w-2xl flex gap-5">
           {reviews.map((review) => (
             <div key={review._id} className="border p-4 rounded-lg bg-white shadow">
               <div className="flex justify-between items-center mb-1">
-                <h2 className="font-semibold text-lg">Donation Title: {review.donationTitle}</h2>
-                <p className="text-yellow-500 font-medium">{review.rating} ★</p>
+                <h2 className="font-semibold text-lg"> {review.donationTitle}</h2>
+                <p className=" text-yellow-500 font-medium">{review.rating} ★</p>
               </div>
              <div>
               <div>

@@ -1,11 +1,10 @@
 import React from 'react';
 import { FaRegCommentDots, FaRibbon, FaStar, FaUser } from 'react-icons/fa';
-import { FaCircleUser } from 'react-icons/fa6';
 import { NavLink } from 'react-router';
 
-const UserDashboard = (setIsOpen) => {
+const UserDashboard = ({setIsOpen}) => {
     return (
-        <>
+        <div>
               <li>
                 <NavLink
                   to="/dashboard/profile"
@@ -67,7 +66,7 @@ const UserDashboard = (setIsOpen) => {
                 </NavLink>
               </li>
             
-            </>
+            </div>
     );
 };
 

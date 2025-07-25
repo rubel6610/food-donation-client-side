@@ -22,35 +22,53 @@ const AllDonations = () => {
       {donations.map((donation) => (
         <div
           key={donation._id}
-          className="card bg-base-100 shadow-lg border border-base-300"
+          className="relative card bg-base-100 shadow-lg border border-base-300"
         >
-          <figure className=" w-full  overflow-hidden">
+          <figure className="w-full overflow-hidden">
             <img
               src={donation.imageUrl}
               alt={donation.title}
-              className="w-full h-50 px-4  object-cover"
+              className="w-full h-50 px-4 object-cover"
             />
           </figure>
-          <div className="card-body">
+
+          <div className="card-body relative">
             <h2 className="card-title">{donation.title}</h2>
-            <p><strong>Restaurant:</strong> {donation.restaurantName}</p>
-            <p><strong>Location:</strong> {donation.location}</p>
-            <p><strong>Charity:</strong> {donation.charityName || "Not Assigned"}</p>
-            <p><strong>Quantity:</strong> {donation.quantity}</p>
             <p>
-              <strong>Status:</strong>{" "}
-              <span className={`badge ${donation.status === "Picked Up"
-                ? "badge-success"
-                : donation.status === "Requested"
-                ? "badge-warning"
-                : "badge-info"
-              }`}>
-                {donation.status}
-              </span>
+              <strong>Restaurant:</strong> {donation.restaurantName}
             </p>
+            <p>
+              <strong>Location:</strong> {donation.location}
+            </p>
+            <p>
+              <strong>Charity:</strong> {donation.charityName || "Not Assigned"}
+            </p>
+            <p>
+              <strong>Quantity:</strong> {donation.quantity}
+            </p>
+            <div className="absolute top-6 right-6">
+              <span
+                className={`badge px-3 py-1 text-xs font-semibold ${
+                  donation.status === "Picked Up"
+                    ? "badge-accent"
+                    : donation.status === "Requested"
+                    ? "badge-warning"
+                    : "badge-success"
+                }`}
+              >
+                {donation.status === "verified"
+                  ? "Available"
+                  : donation.status === "requested"
+                  ? "Requested"
+                  : "Picked Up"}
+              </span>
+            </div>
+
             <div className="mt-4">
               <Link to={`/donation-details/${donation._id}`}>
-                <button className="btn btn-sm btn-outline btn-primary w-full">Details</button>
+                <button className="btn btn-sm btn-outline btn-primary w-full">
+                  Details
+                </button>
               </Link>
             </div>
           </div>

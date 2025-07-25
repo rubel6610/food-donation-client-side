@@ -3,14 +3,17 @@ import { useParams } from "react-router";
 import { FaHeart, FaCheckCircle, FaRegCheckCircle } from "react-icons/fa";
 import { MdOutlineRateReview } from "react-icons/md";
 import useAxiosSecure from "../../hooks/UseAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import UseRole from "../../hooks/UseRole";
 import RequestDonationModal from "../charity/RequestDonationModal";
 import AddReviewModal from "../Reviews/AddReviewModal";
 import Reviews from "../Reviews/Reviews";
+import UseAuth from "../../hooks/UseAuth";
+import Swal from "sweetalert2";
 
 const DonationDetails = () => {
   const axiosSecure = useAxiosSecure();
+  const {user}=UseAuth();
   const { id } = useParams();
   const { role } = UseRole();
   const [openModal, setOpenModal] = useState(false);
@@ -22,6 +25,21 @@ const DonationDetails = () => {
       return res.data;
     },
   });
+
+    const mutation = useMutation({
+      mutationFn:async(donationId)=>{
+        return await axiosSecure.post(`/favorites?email=${user.email}`,{
+          donationId
+        })
+      },
+      onSuccess:()=>{
+        Swal.fire("Success", "Added to your favorites!", "success")
+      },
+      onError:(error)=>{
+         Swal.fire("Error", error.response?.data?.message || "Something went wrong", "error");
+      }
+    })
+  
   return (
     <div className="max-w-5xl mx-auto px-4 pt-24 pb-10">
       <div className="card card-compact lg:card-side bg-base-100 shadow-xl">
@@ -53,22 +71,26 @@ const DonationDetails = () => {
           <p>
             <strong>Email:</strong> {donation.restaurantEmail}
           </p>
-          <p>
-            <strong>Status:</strong>
+          <p className="absolute top-6 right-6">
             <span
               className={`ml-2 px-2 py-1 rounded text-white text-sm ${
                 donation.status === "verified" ? "bg-green-500" : "bg-gray-500"
               }`}
             >
-              {donation.status}
+              {donation.status === "verified"
+                ? "Available"
+                : donation.status === "requested"
+                ? "Requested"
+                : "Picked Up"}
             </span>
           </p>
-
-          {/* Action Buttons */}
           <div className="pt-4 space-y-2">
-            <button className="btn btn-outline btn-error w-full">
-              <FaHeart className="mr-2" /> Save to Favorites
-            </button>
+            {(role === "charity" || role === "user") && (
+              <button onClick={()=>mutation.mutate(donation._id)} className="btn btn-outline btn-error w-full">
+                <FaHeart className="mr-2" /> Save to Favorites
+              </button>
+            )}
+
             {role === "charity" && (
               <>
                 <button

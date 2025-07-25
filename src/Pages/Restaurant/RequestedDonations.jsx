@@ -17,7 +17,9 @@ const RequestedDonations = () => {
     queryKey: ["restaurantRequests", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/requests/restaurant?email=${user.email}`);
+      const res = await axiosSecure.get(
+        `/requests/restaurant?email=${user.email}`
+      );
       return res.data;
     },
   });
@@ -28,9 +30,15 @@ const RequestedDonations = () => {
       if (res.data.modifiedCount > 0) {
         if (status === "Accepted") {
           // Reject all other requests for same donation
-          await axiosSecure.patch(`/requests/reject-others/${donationId}`, { excludeId: id });
+          await axiosSecure.patch(`/requests/reject-others/${donationId}`, {
+            excludeId: id,
+          });
         }
-        Swal.fire("Updated!", `Request ${status.toLowerCase()} successfully.`, "success");
+        Swal.fire(
+          "Updated!",
+          `Request ${status.toLowerCase()} successfully.`,
+          "success"
+        );
         refetch();
       }
     } catch (err) {
@@ -91,7 +99,11 @@ const RequestedDonations = () => {
                       <>
                         <button
                           onClick={() =>
-                            handleStatusUpdate(req._id, req.donationId, "accepted")
+                            handleStatusUpdate(
+                              req._id,
+                              req.donationId,
+                              "accepted"
+                            )
                           }
                           className="btn btn-xs btn-success"
                         >
@@ -99,7 +111,11 @@ const RequestedDonations = () => {
                         </button>
                         <button
                           onClick={() =>
-                            handleStatusUpdate(req._id, req.donationId, "rejected")
+                            handleStatusUpdate(
+                              req._id,
+                              req.donationId,
+                              "rejected"
+                            )
                           }
                           className="btn btn-xs btn-error"
                         >
