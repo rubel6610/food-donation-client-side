@@ -23,33 +23,39 @@ const ReceivedDonations = () => {
   if (isLoading) return <LoadingPage />;
 
   return (
-    <div className="max-w-xl px-4 py-8">
+    <div className="p-4 py-10">
       <h2 className="text-2xl font-bold mb-6">Received Donations</h2>
 
       {donations.length === 0 ? (
         <p className="text-gray-600">No donations received yet.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {donations.map((donation) => (
             <div
               key={donation._id}
-              className="border p-4 rounded-lg shadow bg-white flex flex-col justify-between"
+              className="relative card bg-base-100 shadow-lg border border-base-300"
             >
-              <div>
-                <h3 className="text-xl font-semibold mb-2">{donation.donationTitle}</h3>
+
+              <div className="card-body">
+                <h2 className="card-title">{donation.donationTitle}</h2>
                 <p><strong>Restaurant:</strong> {donation.restaurantName}</p>
                 <p><strong>Food Type:</strong> {donation.foodType}</p>
                 <p><strong>Quantity:</strong> {donation.quantity}</p>
-                <p><strong>Pickup Date:</strong> {donation.pickupTime.split("T")[0]}</p>
-               
-              </div>
+                <p><strong>Pickup Date:</strong> {donation.pickupTime?.split("T")[0]}</p>
 
-              <button
-                onClick={() => setSelectedDonation(donation)}
-                className="mt-4 btn btn-outline btn-info btn-sm"
-              >
-                <MdOutlineRateReview className="mr-2" /> Add Review
-              </button>
+                <div className="absolute top-6 right-6">
+                  <span className="badge badge-success text-xs px-2 py-1 whitespace-nowrap">
+                    Picked Up
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => setSelectedDonation(donation)}
+                  className="btn btn-outline btn-info btn-sm mt-4"
+                >
+                  <MdOutlineRateReview className="mr-2" /> Add Review
+                </button>
+              </div>
             </div>
           ))}
         </div>

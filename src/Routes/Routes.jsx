@@ -30,6 +30,7 @@ import RequestedDonations from "../Pages/Restaurant/RequestedDonations";
 import MyPickups from "../Pages/charity/MyPickups";
 import Favorites from "../Pages/Favourites/Favorites";
 import ReceivedDonations from "../Pages/charity/ReceivedDonations";
+import FeatureDonations from "../Pages/Admin/FeatureDonations";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -144,6 +145,10 @@ export const router = createBrowserRouter([
       {
         path:"manage-requests",
         element:<ManageRequests/>
+      },
+      {
+        path:"feature-donations",
+        element:<FeatureDonations/>
       },
 
       // restaurant routes

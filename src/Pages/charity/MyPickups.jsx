@@ -40,7 +40,6 @@ const MyPickups = () => {
     },
   });
 
-  // 🔘 Confirm Button Handler
   const handleConfirmPickup = (requestId, donationId) => {
     Swal.fire({
       title: "Confirm Pickup?",
