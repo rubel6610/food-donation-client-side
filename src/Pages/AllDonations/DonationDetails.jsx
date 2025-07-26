@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 
 const DonationDetails = () => {
   const axiosSecure = useAxiosSecure();
-  const {user}=UseAuth();
+  const { user } = UseAuth();
   const { id } = useParams();
   const { role } = UseRole();
   const [openModal, setOpenModal] = useState(false);
@@ -26,28 +26,32 @@ const DonationDetails = () => {
     },
   });
 
-    const mutation = useMutation({
-      mutationFn:async(donationId)=>{
-        return await axiosSecure.post(`/favorites?email=${user.email}`,{
-          donationId
-        })
-      },
-      onSuccess:()=>{
-        Swal.fire("Success", "Added to your favorites!", "success")
-      },
-      onError:(error)=>{
-         Swal.fire("Error", error.response?.data?.message || "Something went wrong", "error");
-      }
-    })
-  
+  const mutation = useMutation({
+    mutationFn: async (donationId) => {
+      return await axiosSecure.post(`/favorites?email=${user.email}`, {
+        donationId,
+      });
+    },
+    onSuccess: () => {
+      Swal.fire("Success", "Added to your favorites!", "success");
+    },
+    onError: (error) => {
+      Swal.fire(
+        "Error",
+        error.response?.data?.message || "Something went wrong",
+        "error"
+      );
+    },
+  });
+
   return (
     <div className="max-w-5xl mx-auto px-4 pt-24 pb-10">
       <div className="card card-compact lg:card-side bg-base-100 shadow-xl">
-        <figure className="lg:w-12/15">
+        <figure className="lg:w-8/15">
           <img
             src={donation.imageUrl}
             alt={donation.title}
-            className="h-full w-full object-contain"
+            className=" object-cover"
           />
         </figure>
 
@@ -73,20 +77,23 @@ const DonationDetails = () => {
           </p>
           <p className="absolute top-6 right-6">
             <span
-              className={`ml-2 px-2 py-1 rounded text-white text-sm ${
-                donation.status === "verified" ? "bg-green-500" : "bg-gray-500"
+              className={`badge px-3 py-1 text-xs font-semibold ${
+                donation.donationStatus === "Pick Up"
+                  ? "badge-accent"
+                  : donation.donationStatus === "requested"
+                  ? "badge-warning"
+                  : "badge-success"
               }`}
             >
-              {donation.status === "verified"
-                ? "Available"
-                : donation.status === "requested"
-                ? "Requested"
-                : "Picked Up"}
+              {donation.donationStatus}
             </span>
           </p>
           <div className="pt-4 space-y-2">
             {(role === "charity" || role === "user") && (
-              <button onClick={()=>mutation.mutate(donation._id)} className="btn btn-outline btn-error w-full">
+              <button
+                onClick={() => mutation.mutate(donation._id)}
+                className="btn btn-outline btn-error w-full"
+              >
                 <FaHeart className="mr-2" /> Save to Favorites
               </button>
             )}
@@ -110,18 +117,20 @@ const DonationDetails = () => {
 
             <button
               className={`btn btn-success w-full  ${
-                donation.status !== "accepted" && role !== "charity" && "hidden"
+                (donation.donationStatus !== "Pick Up" || role !== "charity") &&
+                "hidden"
               }`}
             >
               <span className="mr-2 flex items-center gap-2">
-                {donation.status === "accepted" ? (
-                  <>
+                {donation.donationStatus === "available" ? (
+                  <span disabled={donation.donationStatus === "Pick up"}>
                     <FaCheckCircle size={16} /> Picked Up{" "}
-                  </>
+                  </span>
                 ) : (
-                  <FaRegCheckCircle size={16} />
+                  <>
+                    <FaRegCheckCircle size={16} /> Confirm Pickup
+                  </>
                 )}
-                Confirm Pickup
               </span>
             </button>
             {role !== "admin" && role !== "restaurant" && (

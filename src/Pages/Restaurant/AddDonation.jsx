@@ -50,7 +50,7 @@ const AddDonation = () => {
       location,
       imageUrl,
       status: "pending",
-      donated_At:new Date(),
+      donated_At:new Date().toISOString(),
     };
     try {
       const res = await axiosSecure.post("/donations", donations);
@@ -79,8 +79,8 @@ const AddDonation = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto my-10 p-8 bg-green-100 rounded-xl shadow-lg">
-      <h2 className="text-2xl font-bold text-center text-green-800 mb-6 flex items-center justify-center gap-2">
+    <div className="max-w-3xl mx-auto  p-8 bg-green-100 rounded-xl shadow-lg">
+      <h2 className="text-2xl font-bold text-center text-green-800 mb-3 flex items-center justify-center gap-2">
         <TbShoppingBagPlus className="text-3xl" /> Add a Donation
       </h2>
 

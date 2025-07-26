@@ -67,10 +67,10 @@ const Favorites = () => {
             <p className="absolute top-6 right-6">
             <span
               className={`ml-2 px-2 py-1 rounded text-white text-sm ${
-                donation.status === "verified" ? "bg-green-500" : "bg-gray-500"
+                donation.donationStatus === "available" ? "bg-green-500" : "bg-gray-500"
               }`}
             >
-              {donation.status === "verified"
+              {donation.donationStatus === "available"
                 ? "Available"
                 : donation.status === "requested"
                 ? "Requested"

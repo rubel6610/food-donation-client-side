@@ -4,7 +4,6 @@ import Home from "../HomeLayout/Home";
 import PrivateRoutes from "./PrivateRoutes";
 import AuthLayout from "../Pages/Authentication/AuthLayout";
 import DashBoardHome from "../Pages/dashboard/DashBoardHome";
-import Dashboard from "../Pages/dashboard/DashboardLayout";
 import UserProfile from "../Pages/dashboard/Profile/UserProfile";
 import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
@@ -30,6 +29,7 @@ import ManageRequests from "../Pages/Admin/ManageRequests";
 import RequestedDonations from "../Pages/Restaurant/RequestedDonations";
 import MyPickups from "../Pages/charity/MyPickups";
 import Favorites from "../Pages/Favourites/Favorites";
+import ReceivedDonations from "../Pages/charity/ReceivedDonations";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -195,6 +195,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateCharityRoutes>
             <MyPickups/>
+          </PrivateCharityRoutes>
+        ),
+      },
+      {
+        path: "received-donations",
+        element: (
+          <PrivateCharityRoutes>
+            <ReceivedDonations/>
           </PrivateCharityRoutes>
         ),
       },

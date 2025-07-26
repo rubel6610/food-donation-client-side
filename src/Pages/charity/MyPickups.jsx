@@ -85,7 +85,7 @@ const MyPickups = () => {
                   <strong>Quantity:</strong> {pickup.quantity}
                 </p>
                 <p>
-                  <strong>Pickup Time:</strong> {pickup.pickupTime}
+                  <strong>Pickup Time:</strong> {pickup.pickupTime.split("T")[0]}
                 </p>
                 <p className="mt-2">
                   <strong>Status:</strong>{" "}

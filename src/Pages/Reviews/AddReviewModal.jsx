@@ -77,13 +77,13 @@ const AddReviewModal = ({ openReviewModal, onClose, donation }) => {
           </div>
 
           <div className="flex justify-between gap-4">
-            <button type="submit" className="btn btn-primary w-full">
+            <button type="submit" className="btn btn-primary">
               Submit Review
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="btn btn-outline w-full"
+              className="btn btn-outline"
             >
               Cancel
             </button>
