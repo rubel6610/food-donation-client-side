@@ -15,7 +15,7 @@ const ManageRequests = () => {
     },
   });
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id,donationId) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
       text: "This request will be permanently deleted.",
@@ -26,7 +26,7 @@ const ManageRequests = () => {
 
     if (confirm.isConfirmed) {
       try {
-        const res = await axiosSecure.delete(`/requests/${id}`);
+        const res = await axiosSecure.delete(`/requests/${id}/${donationId}`);
         if (res.data.deletedCount > 0) {
           Swal.fire("Deleted!", "The request has been removed.", "success");
           refetch();
@@ -69,7 +69,7 @@ const ManageRequests = () => {
                   <td>{req.requestDescription}</td>
                   <td>
                     <button
-                      onClick={() => handleDelete(req._id)}
+                      onClick={() => handleDelete(req._id,req.donationId)}
                       className="btn btn-sm btn-error"
                     >
                       Delete

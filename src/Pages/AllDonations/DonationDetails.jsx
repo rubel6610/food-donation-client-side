@@ -90,15 +90,15 @@ const DonationDetails = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 pt-24 pb-10">
       <div className="card card-compact lg:card-side bg-base-100 shadow-xl">
-        <figure className="lg:w-8/15">
+        <figure className="lg:max-w-6/15 ">
           <img
             src={donation.imageUrl}
             alt={donation.title}
-            className=" object-cover"
+            className="w-full object-cover"
           />
         </figure>
 
-        <div className="card-body lg:w-1/2 space-y-2">
+        <div className="card-body lg:w-1/2 ">
           <h2 className="card-title text-2xl font-bold">{donation.title}</h2>
           <p className="text-gray-600">
             <strong>Food Type:</strong> {donation.foodType}
@@ -145,6 +145,7 @@ const DonationDetails = () => {
               <>
                 <button
                   onClick={() => setOpenModal(true)}
+                  disabled={donation.donationStatus === "Picked Up"}
                   className="btn btn-primary w-full"
                 >
                   Request Donation

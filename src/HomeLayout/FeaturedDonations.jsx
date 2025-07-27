@@ -51,13 +51,13 @@ const FeaturedDonations = () => {
                 <p>
                   <strong>Location:</strong> {donation.location}
                 </p>
-                <p>
-                  <strong>Status:</strong>{" "}
+                <p className="absolute top-3 right-3">
+             
                   <span
-                    className={`badge text-white ${
+                    className={`badge  ${
                       donation.donationStatus === "Picked Up"
                         ? "badge-success"
-                        : donation.donationStatus === "Requested"
+                        : donation.donationStatus === "requested"
                         ? "badge-warning"
                         : "badge-info"
                     }`}

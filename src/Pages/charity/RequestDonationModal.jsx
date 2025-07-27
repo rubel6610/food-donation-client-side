@@ -22,6 +22,7 @@ const RequestDonationModal = ({ donation, openModal, onClose }) => {
       restaurantEmail: donation.restaurantEmail,
       charityName: user.displayName,
       charityEmail: user.email,
+      charityImage:user.photoURL,
       requestDescription: data.requestDescription,
       pickupTime: data.pickupTime,
       status: "pending",
