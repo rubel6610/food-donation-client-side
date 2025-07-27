@@ -44,6 +44,49 @@ const DonationDetails = () => {
     },
   });
 
+  // confirm pickup
+  const { data: pickups = [], refetch } = useQuery({
+    queryKey: ["myPickups", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/requests/pickups?email=${user.email}`
+      );
+      return res.data;
+    },
+  });
+
+  const { mutate: confirmPickup, isPending } = useMutation({
+    mutationFn: async ({ requestId, donationId }) => {
+      return await axiosSecure.patch(`/requests/picked-up/${requestId}`, {
+        donationId,
+      });
+    },
+    onSuccess: (data) => {
+      if (data.data.modifiedCount > 0) {
+        Swal.fire("Confirmed!", "Donation marked as picked up.", "success");
+        refetch();
+      }
+    },
+    onError: () => {
+      Swal.fire("Error", "Something went wrong.", "error");
+    },
+  });
+
+  const handleConfirmPickup = (requestId, donationId) => {
+    Swal.fire({
+      title: "Confirm Pickup?",
+      text: "Are you sure you have picked up this donation?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Confirm",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        confirmPickup({ requestId, donationId });
+      }
+    });
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-4 pt-24 pb-10">
       <div className="card card-compact lg:card-side bg-base-100 shadow-xl">
@@ -115,24 +158,35 @@ const DonationDetails = () => {
               </>
             )}
 
-            <button
-              className={`btn btn-success w-full  ${
-                (donation.donationStatus !== "Pick Up" || role !== "charity") &&
-                "hidden"
-              }`}
-            >
-              <span className="mr-2 flex items-center gap-2">
-                {donation.donationStatus === "available" ? (
-                  <span disabled={donation.donationStatus === "Pick up"}>
-                    <FaCheckCircle size={16} /> Picked Up{" "}
-                  </span>
-                ) : (
-                  <>
-                    <FaRegCheckCircle size={16} /> Confirm Pickup
-                  </>
-                )}
-              </span>
-            </button>
+            {role === "charity" && (
+              <>
+                {pickups
+                  .filter(
+                    (pickup) =>
+                      pickup.donationId === donation._id &&
+                      pickup.status !== "Picked Up"
+                  )
+                  .map((pickup) => (
+                    <button
+                      key={pickup._id}
+                      onClick={() =>
+                        handleConfirmPickup(pickup._id, pickup.donationId)
+                      }
+                      disabled={isPending}
+                      className="btn btn-success w-full"
+                    >
+                      {isPending ? (
+                        "Updating..."
+                      ) : (
+                        <>
+                          <FaCheckCircle className="mr-2" /> Confirm Pickup
+                        </>
+                      )}
+                    </button>
+                  ))}
+              </>
+            )}
+
             {role !== "admin" && role !== "restaurant" && (
               <>
                 <button

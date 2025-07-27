@@ -8,8 +8,6 @@ import LoadingPage from "../../components/LoadingPage";
 const MyPickups = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = UseAuth();
-
-  // 🔍 Fetch pickup requests
   const {
     data: pickups = [],
     isLoading,
