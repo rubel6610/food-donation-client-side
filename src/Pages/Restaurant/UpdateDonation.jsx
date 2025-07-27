@@ -156,7 +156,7 @@ const UpdateDonation = () => {
             <input
               {...register("restaurantName")}
               type="text"
-              readOnly
+              
               className="input input-bordered w-full bg-gray-100 text-black"
             />
           </div>

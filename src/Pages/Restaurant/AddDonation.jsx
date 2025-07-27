@@ -29,8 +29,6 @@ const AddDonation = () => {
       location,
       pickupTime,
       quantity,
-      restaurantEmail,
-      restaurantName,
     } = data;
     const formData = new FormData();
     formData.append("image", image[0]);
@@ -42,8 +40,8 @@ const AddDonation = () => {
     // TODO: send data to server
     const donations = {
       title,
-      restaurantName,
-      restaurantEmail,
+      restaurantName:user.displayName,
+      restaurantEmail:user.email,
       foodType,
       quantity,
       pickupTime,

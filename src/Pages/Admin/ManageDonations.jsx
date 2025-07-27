@@ -74,7 +74,7 @@ const ManageDonations = () => {
                     {donation.status || 'pending'}
                   </span>
                 </td>
-                <td className="flex gap-2">
+                <td className="flex items-center gap-2">
                   <button
                     onClick={() => handleVerify(donation._id)}
                     disabled={donation.status === 'verified'}
