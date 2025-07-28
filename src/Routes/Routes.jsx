@@ -31,6 +31,7 @@ import MyPickups from "../Pages/charity/MyPickups";
 import Favorites from "../Pages/Favourites/Favorites";
 import ReceivedDonations from "../Pages/charity/ReceivedDonations";
 import FeatureDonations from "../Pages/Admin/FeatureDonations";
+import DonationStatistics from './../Pages/Restaurant/DonationStatistics';
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -167,6 +168,10 @@ export const router = createBrowserRouter([
       {
         path:"requested-donations",
         element:<PrivateRestaurantRoutes><RequestedDonations/></PrivateRestaurantRoutes> ,
+      },
+      {
+        path:"donation-statistics",
+        element:<PrivateRestaurantRoutes><DonationStatistics/></PrivateRestaurantRoutes> ,
       },
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router";
-import { FaUser, FaPlusCircle, FaListAlt, FaHandsHelping } from "react-icons/fa";
+import { FaUser, FaPlusCircle, FaListAlt, FaHandsHelping, FaChartPie } from "react-icons/fa";
 
 const RestaurantDashboard = ({ setIsOpen }) => {
   return (
@@ -72,6 +72,22 @@ const RestaurantDashboard = ({ setIsOpen }) => {
           <FaHandsHelping /> Requested Donations
         </NavLink>
       </li>
+      <li>
+  <NavLink
+    to="/dashboard/donation-statistics"
+    onClick={() => setIsOpen(false)}
+    className={({ isActive }) =>
+      `flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
+        isActive
+          ? "bg-green-600 text-white shadow"
+          : "hover:bg-green-200 text-green-700"
+      }`
+    }
+  >
+    <FaChartPie /> Donation Statistics
+  </NavLink>
+</li>
+
     </div>
   );
 };

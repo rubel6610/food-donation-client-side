@@ -56,7 +56,7 @@ const Counter = ({ value }) => {
   );
 };
 
-// 🌍 ImpactStats Section
+
 const ImpactStats = () => {
   useEffect(() => {
     AOS.init({ duration: 1000 });
