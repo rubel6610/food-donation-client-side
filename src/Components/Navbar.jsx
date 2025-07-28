@@ -20,7 +20,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-md fixed  top-0 z-50 px-4">
+    <div className="navbar bg-base-100 shadow-md fixed   top-0 z-50 px-4">
       <div className="navbar-start">
         {/* Mobile Menu Toggle (left side on small devices) */}
         <div className="dropdown dropdown-bottom lg:hidden mr-2">
