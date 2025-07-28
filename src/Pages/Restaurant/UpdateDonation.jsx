@@ -3,23 +3,29 @@ import { useParams, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/UseAxiosSecure";
-import { TbShoppingBagPlus } from "react-icons/tb";
-import { MdEditNote, MdEmail, MdFastfood, MdLocationOn } from "react-icons/md";
+import {
+  MdEditNote,
+  MdEmail,
+  MdFastfood,
+  MdLocationOn,
+} from "react-icons/md";
 import { FaRegClock, FaUserAlt } from "react-icons/fa";
 import { IoIosImages } from "react-icons/io";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
 const UpdateDonation = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
   const { data: donation = {} } = useQuery({
     queryKey: ["donation", id],
     queryFn: async () => {
@@ -27,36 +33,38 @@ const UpdateDonation = () => {
       return res.data;
     },
   });
+
   useEffect(() => {
     if (donation) {
       reset(donation);
     }
   }, [donation, reset]);
 
-  const onSubmit = async (data) => {
-    let imageUrl = donation.imageUrl;
-    const formData = new FormData();
-    formData.append("image", data.image[0]);
-    if (data.image && data.image[0]) {
-      const imageRes = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
-        formData
-      );
-      imageUrl = imageRes.data.data.display_url;
-    }
+  const mutation = useMutation({
+    mutationFn: async (data) => {
+      let imageUrl = donation.imageUrl;
+      if (data.image && data.image[0]) {
+        const formData = new FormData();
+        formData.append("image", data.image[0]);
+        const imageRes = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+          formData
+        );
+        imageUrl = imageRes.data.data.display_url;
+      }
 
-    const updatedData = {
-      imageUrl,
-      title: data.title,
-      foodType: data.foodType,
-      location: data.location,
-      quantity: data.quantity,
-      pickupTime: data.pickupTime,
-    };
+      const updatedData = {
+        imageUrl,
+        title: data.title,
+        foodType: data.foodType,
+        location: data.location,
+        quantity: data.quantity,
+        pickupTime: data.pickupTime,
+      };
 
-    try {
-      const res = await axiosSecure.patch(`/donations/${id}`, updatedData);
-
+      return axiosSecure.patch(`/donations/${id}`, updatedData);
+    },
+    onSuccess: (res) => {
       if (res.data.modifiedCount > 0) {
         Swal.fire("Updated!", "Donation updated successfully.", "success");
         reset();
@@ -64,10 +72,14 @@ const UpdateDonation = () => {
       } else {
         Swal.fire("No Change!", "No updates were made.", "info");
       }
-    } catch (error) {
-      console.error("Update error:", error);
+    },
+    onError: () => {
       Swal.fire("Error!", "Failed to update donation.", "error");
-    }
+    },
+  });
+
+  const onSubmit = (data) => {
+    mutation.mutate(data);
   };
 
   return (
@@ -77,7 +89,6 @@ const UpdateDonation = () => {
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        {/* Donation Title */}
         <div>
           <div className="flex items-center gap-3">
             <MdFastfood className="text-xl text-green-700" />
@@ -88,12 +99,9 @@ const UpdateDonation = () => {
               className="input input-bordered w-full bg-white text-black"
             />
           </div>
-          {errors.title && (
-            <p className="text-red-600 text-sm mt-1">{errors.title.message}</p>
-          )}
+          {errors.title && <p className="text-red-600 text-sm mt-1">{errors.title.message}</p>}
         </div>
 
-        {/* Food Type */}
         <div>
           <div className="flex items-center gap-3">
             <MdFastfood className="text-xl text-green-700" />
@@ -104,14 +112,9 @@ const UpdateDonation = () => {
               className="input input-bordered w-full bg-white text-black"
             />
           </div>
-          {errors.foodType && (
-            <p className="text-red-600 text-sm mt-1">
-              {errors.foodType.message}
-            </p>
-          )}
+          {errors.foodType && <p className="text-red-600 text-sm mt-1">{errors.foodType.message}</p>}
         </div>
 
-        {/* Quantity */}
         <div>
           <div className="flex items-center gap-3">
             <MdFastfood className="text-xl text-green-700" />
@@ -122,47 +125,34 @@ const UpdateDonation = () => {
               className="input input-bordered w-full bg-white text-black"
             />
           </div>
-          {errors.quantity && (
-            <p className="text-red-600 text-sm mt-1">
-              {errors.quantity.message}
-            </p>
-          )}
+          {errors.quantity && <p className="text-red-600 text-sm mt-1">{errors.quantity.message}</p>}
         </div>
 
-        {/* Pickup Time */}
         <div>
           <div className="flex items-center gap-3">
             <FaRegClock className="text-xl text-green-700" />
             <input
-              {...register("pickupTime", {
-                required: "Pickup time window is required",
-              })}
+              {...register("pickupTime", { required: "Pickup time window is required" })}
               type="text"
               placeholder="Pickup Time Window (e.g., 2PM - 4PM)"
               className="input input-bordered w-full bg-white text-black"
             />
           </div>
-          {errors.pickupTime && (
-            <p className="text-red-600 text-sm mt-1">
-              {errors.pickupTime.message}
-            </p>
-          )}
+          {errors.pickupTime && <p className="text-red-600 text-sm mt-1">{errors.pickupTime.message}</p>}
         </div>
 
-        {/* Restaurant Name */}
         <div>
           <div className="flex items-center gap-3">
             <FaUserAlt className="text-xl text-green-700" />
             <input
               {...register("restaurantName")}
               type="text"
-              
               className="input input-bordered w-full bg-gray-100 text-black"
+              readOnly
             />
           </div>
         </div>
 
-        {/* Restaurant Email */}
         <div>
           <div className="flex items-center gap-3">
             <MdEmail className="text-xl text-green-700" />
@@ -175,7 +165,6 @@ const UpdateDonation = () => {
           </div>
         </div>
 
-        {/* Location */}
         <div>
           <div className="flex items-center gap-3">
             <MdLocationOn className="text-xl text-green-700" />
@@ -186,14 +175,9 @@ const UpdateDonation = () => {
               className="input input-bordered w-full bg-white text-black"
             />
           </div>
-          {errors.location && (
-            <p className="text-red-600 text-sm mt-1">
-              {errors.location.message}
-            </p>
-          )}
+          {errors.location && <p className="text-red-600 text-sm mt-1">{errors.location.message}</p>}
         </div>
 
-        {/* Image Upload */}
         <div>
           <div className="flex items-center gap-3">
             <IoIosImages className="text-xl text-green-700" />
@@ -204,15 +188,13 @@ const UpdateDonation = () => {
               className="file-input file-input-bordered w-full bg-white text-black"
             />
           </div>
-          {errors.image && (
-            <p className="text-red-600 text-sm mt-1">{errors.image.message}</p>
-          )}
+          {errors.image && <p className="text-red-600 text-sm mt-1">{errors.image.message}</p>}
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition"
+          disabled={mutation.isLoading}
         >
           Submit Donation
         </button>

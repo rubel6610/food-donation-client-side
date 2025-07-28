@@ -9,11 +9,13 @@ import axios from "axios";
 import useAxiosSecure from "../../hooks/UseAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
 
 const AddDonation = () => {
   const navigate = useNavigate();
   const { user } = UseAuth();
   const axiosSecure = useAxiosSecure();
+
   const {
     register,
     handleSubmit,
@@ -21,39 +23,14 @@ const AddDonation = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    const {
-      title,
-      image,
-      foodType,
-      location,
-      pickupTime,
-      quantity,
-    } = data;
-    const formData = new FormData();
-    formData.append("image", image[0]);
-    const imageRes = await axios.post(
-      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
-      formData
-    );
-    const imageUrl = imageRes.data.data.display_url;
-    // TODO: send data to server
-    const donations = {
-      title,
-      restaurantName:user.displayName,
-      restaurantEmail:user.email,
-      foodType,
-      quantity,
-      pickupTime,
-      location,
-      imageUrl,
-      status: "pending",
-      donated_At:new Date().toISOString(),
-    };
-    try {
-      const res = await axiosSecure.post("/donations", donations);
 
-      if (res.data.insertedId) {
+  const mutation = useMutation({
+    mutationFn: async (donations) => {
+      const res = await axiosSecure.post("/donations", donations);
+      return res.data;
+    },
+    onSuccess: (data) => {
+      if (data.insertedId) {
         Swal.fire({
           icon: "success",
           title: "Donation Submitted!",
@@ -61,29 +38,65 @@ const AddDonation = () => {
           timer: 2500,
           showConfirmButton: false,
         });
-        navigate("/dashboard/my-donations")
+        navigate("/dashboard/my-donations");
       }
-    } catch (error) {
-      console.error("Donation submission error:", error);
-
+    },
+    onError: () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Something went wrong while submitting your donation. Please try again.",
       });
-    }
+    },
+  });
 
-    reset();
+  const onSubmit = async (data) => {
+    const { title, image, foodType, location, pickupTime, quantity } = data;
+
+    try {
+      const formData = new FormData();
+      formData.append("image", image[0]);
+
+      const imageRes = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+        formData
+      );
+
+      const imageUrl = imageRes.data.data.display_url;
+
+      const donationData = {
+        title,
+        restaurantName: user.displayName,
+        restaurantEmail: user.email,
+        foodType,
+        quantity,
+        pickupTime,
+        location,
+        imageUrl,
+        status: "pending",
+        donated_At: new Date().toISOString(),
+      };
+
+      mutation.mutate(donationData);
+      reset();
+    } catch (err) {
+      console.error("Image upload error:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Image Upload Failed",
+        text: "Unable to upload image. Please try again later.",
+      });
+    }
   };
 
   return (
-    <div className="max-w-3xl mx-auto  p-8 bg-green-100 rounded-xl shadow-lg">
+    <div className="max-w-3xl mx-auto p-8 bg-green-100 rounded-xl shadow-lg">
       <h2 className="text-2xl font-bold text-center text-green-800 mb-3 flex items-center justify-center gap-2">
         <TbShoppingBagPlus className="text-3xl" /> Add a Donation
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        {/* Donation Title */}
+     
         <div>
           <div className="flex items-center gap-3">
             <MdFastfood className="text-xl text-green-700" />
@@ -99,7 +112,7 @@ const AddDonation = () => {
           )}
         </div>
 
-        {/* Food Type */}
+       
         <div>
           <div className="flex items-center gap-3">
             <MdFastfood className="text-xl text-green-700" />
@@ -111,13 +124,11 @@ const AddDonation = () => {
             />
           </div>
           {errors.foodType && (
-            <p className="text-red-600 text-sm mt-1">
-              {errors.foodType.message}
-            </p>
+            <p className="text-red-600 text-sm mt-1">{errors.foodType.message}</p>
           )}
         </div>
 
-        {/* Quantity */}
+      
         <div>
           <div className="flex items-center gap-3">
             <MdFastfood className="text-xl text-green-700" />
@@ -129,13 +140,11 @@ const AddDonation = () => {
             />
           </div>
           {errors.quantity && (
-            <p className="text-red-600 text-sm mt-1">
-              {errors.quantity.message}
-            </p>
+            <p className="text-red-600 text-sm mt-1">{errors.quantity.message}</p>
           )}
         </div>
 
-        {/* Pickup Time */}
+      
         <div>
           <div className="flex items-center gap-3">
             <FaRegClock className="text-xl text-green-700" />
@@ -149,13 +158,11 @@ const AddDonation = () => {
             />
           </div>
           {errors.pickupTime && (
-            <p className="text-red-600 text-sm mt-1">
-              {errors.pickupTime.message}
-            </p>
+            <p className="text-red-600 text-sm mt-1">{errors.pickupTime.message}</p>
           )}
         </div>
 
-        {/* Restaurant Name */}
+      
         <div>
           <div className="flex items-center gap-3">
             <FaUserAlt className="text-xl text-green-700" />
@@ -169,7 +176,7 @@ const AddDonation = () => {
           </div>
         </div>
 
-        {/* Restaurant Email */}
+       
         <div>
           <div className="flex items-center gap-3">
             <MdEmail className="text-xl text-green-700" />
@@ -183,7 +190,7 @@ const AddDonation = () => {
           </div>
         </div>
 
-        {/* Location */}
+ 
         <div>
           <div className="flex items-center gap-3">
             <MdLocationOn className="text-xl text-green-700" />
@@ -195,20 +202,16 @@ const AddDonation = () => {
             />
           </div>
           {errors.location && (
-            <p className="text-red-600 text-sm mt-1">
-              {errors.location.message}
-            </p>
+            <p className="text-red-600 text-sm mt-1">{errors.location.message}</p>
           )}
         </div>
 
-        {/* Image Upload */}
+ 
         <div>
           <div className="flex items-center gap-3">
             <IoIosImages className="text-xl text-green-700" />
             <input
-              {...register("image", {
-                required: "Image is required",
-              })}
+              {...register("image", { required: "Image is required" })}
               type="file"
               accept="image/*"
               className="file-input file-input-bordered w-full bg-white text-black"
@@ -219,12 +222,13 @@ const AddDonation = () => {
           )}
         </div>
 
-        {/* Submit Button */}
+    
         <button
           type="submit"
+          disabled={mutation.isLoading}
           className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition"
         >
-          Submit Donation
+          {mutation.isLoading ? "Submitting..." : "Submit Donation"}
         </button>
       </form>
     </div>

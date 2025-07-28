@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/UseAxiosSecure";
 import UseAuth from "../../hooks/UseAuth";
 import Swal from "sweetalert2";
@@ -17,34 +17,32 @@ const RequestedDonations = () => {
     queryKey: ["restaurantRequests", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/requests/restaurant?email=${user.email}`
-      );
+      const res = await axiosSecure.get(`/requests/restaurant?email=${user.email}`);
       return res.data;
     },
   });
 
-  const handleStatusUpdate = async (id, donationId, status) => {
-    try {
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ id, donationId, status }) => {
       const res = await axiosSecure.patch(`/requests/status/${id}`, { status });
-      if (res.data.modifiedCount > 0) {
-        if (status === "Accepted") {
-          // Reject all other requests for same donation
-          await axiosSecure.patch(`/requests/reject-others/${donationId}`, {
-            excludeId: id,
-          });
-        }
-        Swal.fire(
-          "Updated!",
-          `Request ${status.toLowerCase()} successfully.`,
-          "success"
-        );
-        refetch();
+      if (res.data.modifiedCount > 0 && status === "rejected") {
+        await axiosSecure.patch(`/requests/reject-others/${donationId}`, {
+          excludeId: id,
+        });
       }
-    } catch (err) {
-      console.error(err);
+      return status;
+    },
+    onSuccess: (status) => {
+      Swal.fire("Updated!", `Request ${status} successfully.`, "success");
+      refetch();
+    },
+    onError: () => {
       Swal.fire("Error!", "Failed to update request status.", "error");
-    }
+    },
+  });
+
+  const handleStatusUpdate = (id, donationId, status) => {
+    updateStatusMutation.mutate({ id, donationId, status });
   };
 
   if (isLoading) return <LoadingPage />;
@@ -52,7 +50,6 @@ const RequestedDonations = () => {
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">Requested Donations</h2>
-
       {requests.length === 0 ? (
         <p className="text-gray-500">No requests have been made yet.</p>
       ) : (
@@ -99,25 +96,19 @@ const RequestedDonations = () => {
                       <>
                         <button
                           onClick={() =>
-                            handleStatusUpdate(
-                              req._id,
-                              req.donationId,
-                              "accepted"
-                            )
+                            handleStatusUpdate(req._id, req.donationId, "accepted")
                           }
                           className="btn btn-xs btn-success"
+                          disabled={updateStatusMutation.isLoading}
                         >
                           Accept
                         </button>
                         <button
                           onClick={() =>
-                            handleStatusUpdate(
-                              req._id,
-                              req.donationId,
-                              "rejected"
-                            )
+                            handleStatusUpdate(req._id, req.donationId, "rejected")
                           }
                           className="btn btn-xs btn-error"
+                          disabled={updateStatusMutation.isLoading}
                         >
                           Reject
                         </button>

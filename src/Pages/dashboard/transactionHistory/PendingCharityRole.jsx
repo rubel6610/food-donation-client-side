@@ -77,15 +77,15 @@ const PendingCharityRole = () => {
                     {payment.status || "N/A"}
                   </span>
                 </td>
-                <td>
+                <td className="flex gap-2">
                   <button
-                    className="btn btn-success"
+                    className="btn btn-xs btn-success"
                     onClick={() => handleCharityRole(payment.email, "approved")}
                   >
                     Accept
                   </button>
                   <button
-                    className="btn btn-success"
+                    className="btn btn-xs btn-success"
                     onClick={() => handleCharityRole(payment.email, "rejected")}
                   >
                     Reject

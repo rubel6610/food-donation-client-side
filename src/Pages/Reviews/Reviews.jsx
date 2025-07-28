@@ -1,21 +1,24 @@
 import React from "react";
 import useAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import LoadingPage from "../../components/LoadingPage";
-import UseAuth from "../../hooks/UseAuth";
 import { useParams } from "react-router";
 import { format } from "date-fns";
+
 
 const Reviews = () => {
     const axiosSecure = useAxiosSecure();
     const {id}=useParams();
-    const {data:reviews=[]}=useQuery({
+    const {data:reviews=[],isLoading}=useQuery({
         queryKey:["reviews",id],
         queryFn:async()=>{
             const res = await axiosSecure(`/reviews/${id}`);
             return res.data;
         }
     })
+    if(isLoading) return  <div className="flex justify-center items-center mt-4">
+      <span className="loading loading-spinner text-secondary loading-md"></span>
+      <p className="ml-2 text-blue-700">Loading...</p>
+    </div>
   
 return (
     <div className="max-w-4xl mx-auto px-4 py-6">

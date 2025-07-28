@@ -34,6 +34,7 @@ const DonationDetails = () => {
     },
     onSuccess: () => {
       Swal.fire("Success", "Added to your favorites!", "success");
+    
     },
     onError: (error) => {
       Swal.fire(
@@ -66,6 +67,7 @@ const DonationDetails = () => {
       if (data.data.modifiedCount > 0) {
         Swal.fire("Confirmed!", "Donation marked as picked up.", "success");
         refetch();
+        
       }
     },
     onError: () => {
@@ -90,7 +92,7 @@ const DonationDetails = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 pt-24 pb-10">
       <div className="card card-compact lg:card-side bg-base-100 shadow-xl">
-        <figure className="lg:max-w-6/15 ">
+        <figure className="lg:max-w-7/15 h-96 w-8/12 mx-auto">
           <img
             src={donation.imageUrl}
             alt={donation.title}
@@ -98,8 +100,8 @@ const DonationDetails = () => {
           />
         </figure>
 
-        <div className="card-body lg:w-1/2 ">
-          <h2 className="card-title text-2xl font-bold">{donation.title}</h2>
+        <div className="card-body lg:w-1/2 mx-auto lg:mx-0 ">
+          <h2 className="card-title  text-2xl font-bold">{donation.title}</h2>
           <p className="text-gray-600">
             <strong>Food Type:</strong> {donation.foodType}
           </p>

@@ -158,7 +158,7 @@ const ManageUsers = () => {
 
       {isLoading &&   <div className="flex justify-center items-center mt-4">
       <span className="loading loading-spinner text-secondary loading-md"></span>
-      <p className="ml-2 text-secondary">Searching...</p>
+      <p className="ml-2 text-blue-600">Searching...</p>
     </div>}
     </div>
   );
