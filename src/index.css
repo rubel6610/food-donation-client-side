@@ -9,3 +9,7 @@
   font-variation-settings:
     "wdth" 100;
 }
+[data-aos] {
+  opacity: 1 !important;
+  transform: none !important;
+}
