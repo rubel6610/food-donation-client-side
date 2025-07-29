@@ -100,7 +100,7 @@ const DonationDetails = () => {
           />
         </figure>
 
-        <div className="card-body lg:w-1/2 mx-auto lg:mx-0 ">
+        <div className="card-body lg:w-1/2  ">
           <h2 className="card-title  text-2xl font-bold">{donation.title}</h2>
           <p className="text-gray-600">
             <strong>Food Type:</strong> {donation.foodType}
@@ -120,7 +120,7 @@ const DonationDetails = () => {
           <p>
             <strong>Email:</strong> {donation.restaurantEmail}
           </p>
-          <p className="absolute top-6 right-6">
+          <p className="absolute top-10 lg:right-6 right-46">
             <span
               className={`badge px-3 py-1 text-xs font-semibold ${
                 donation.donationStatus === "Pick Up"

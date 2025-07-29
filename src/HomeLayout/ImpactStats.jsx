@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+// ✅ Impact statistics data
 const stats = [
   {
     id: 1,
@@ -23,26 +24,29 @@ const stats = [
   },
 ];
 
-// 🔢 Counter Component
+// ✅ Fixed Counter component using useRef
 const Counter = ({ value }) => {
   const [count, setCount] = useState(0);
+  const countRef = useRef(0);
 
   useEffect(() => {
-    let start = 0;
     const end = parseInt(value);
-    if (start === end) return;
+    if (countRef.current === end) return;
 
-    let duration = 1000;
-    let incrementTime = 30;
-    let increment = Math.ceil(end / (duration / incrementTime));
+    const duration = 2000; // total animation duration in ms
+    const incrementTime = 30; // update interval in ms
+    const steps = Math.floor(duration / incrementTime);
+    const increment = Math.ceil(end / steps);
 
     const counter = setInterval(() => {
-      start += increment;
-      if (start >= end) {
+      countRef.current += increment;
+
+      if (countRef.current >= end) {
+        countRef.current = end;
         setCount(end);
         clearInterval(counter);
       } else {
-        setCount(start);
+        setCount(countRef.current);
       }
     }, incrementTime);
 
@@ -56,7 +60,7 @@ const Counter = ({ value }) => {
   );
 };
 
-
+// ✅ Main ImpactStats component
 const ImpactStats = () => {
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -65,10 +69,7 @@ const ImpactStats = () => {
   return (
     <div className="bg-base-200 py-14 px-4">
       <div className="max-w-6xl mx-auto text-center">
-        <h2
-          className="text-3xl md:text-4xl font-bold mb-10"
-          data-aos="fade-up"
-        >
+        <h2 className="text-3xl md:text-4xl font-bold mb-10" data-aos="zoom-in-up">
           🌱 Our Community Impact
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">

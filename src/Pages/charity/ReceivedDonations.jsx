@@ -15,7 +15,7 @@ const ReceivedDonations = () => {
     queryKey: ["receivedDonations", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/requests/received?email=${user.email}`);
+      const res = await axiosSecure.get(`/requests/received?email=${user?.email}`);
       return res.data;
     },
   });

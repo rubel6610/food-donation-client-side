@@ -29,6 +29,7 @@
     "react-router": "^7.7.0",
     "react-simple-typewriter": "^5.0.1",
     "recharts": "^3.1.0",
+    "surge": "^0.24.6",
     "sweetalert2": "^11.22.2",
     "tailwindcss": "^4.1.11"
   },

@@ -87,7 +87,8 @@ const MyDonationRequest = () => {
                         ? "text-yellow-600"
                         : req.status === "accepted"
                         ? "text-green-600"
-                        : "text-red-600"
+
+                        : req.status === "Picked Up" ? "text-accent":"text-red-600"
                     }`}
                   >
                     {req.status}

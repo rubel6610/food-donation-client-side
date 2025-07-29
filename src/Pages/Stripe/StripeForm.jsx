@@ -71,7 +71,7 @@ const StripeForm = ({ charityInfo }) => {
               icon: "success",
               confirmButtonText: "OK",
             });
-            navigate("/dashboard/home");
+            navigate("/dashboard/profile");
           } else {
             Swal.fire({
               title: "Payment Failed",

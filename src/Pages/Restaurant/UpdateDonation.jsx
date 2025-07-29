@@ -26,7 +26,10 @@ const UpdateDonation = () => {
     formState: { errors },
   } = useForm();
 
-  const { data: donation = {} } = useQuery({
+  const {
+    data: donation,
+    isLoading,
+  } = useQuery({
     queryKey: ["donation", id],
     queryFn: async () => {
       const res = await axiosSecure(`/donation/${id}`);
@@ -43,6 +46,7 @@ const UpdateDonation = () => {
   const mutation = useMutation({
     mutationFn: async (data) => {
       let imageUrl = donation.imageUrl;
+
       if (data.image && data.image[0]) {
         const formData = new FormData();
         formData.append("image", data.image[0]);
@@ -82,6 +86,10 @@ const UpdateDonation = () => {
     mutation.mutate(data);
   };
 
+  if (isLoading) {
+    return <div className="text-center text-lg text-green-700">Loading donation data...</div>;
+  }
+
   return (
     <div className="max-w-3xl mx-auto my-10 p-8 bg-green-100 rounded-xl shadow-lg">
       <h2 className="text-2xl font-bold text-center text-green-800 mb-6 flex items-center justify-center gap-2">
@@ -89,6 +97,7 @@ const UpdateDonation = () => {
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        {/* Title */}
         <div>
           <div className="flex items-center gap-3">
             <MdFastfood className="text-xl text-green-700" />
@@ -102,6 +111,7 @@ const UpdateDonation = () => {
           {errors.title && <p className="text-red-600 text-sm mt-1">{errors.title.message}</p>}
         </div>
 
+        {/* Food Type */}
         <div>
           <div className="flex items-center gap-3">
             <MdFastfood className="text-xl text-green-700" />
@@ -115,6 +125,7 @@ const UpdateDonation = () => {
           {errors.foodType && <p className="text-red-600 text-sm mt-1">{errors.foodType.message}</p>}
         </div>
 
+        {/* Quantity */}
         <div>
           <div className="flex items-center gap-3">
             <MdFastfood className="text-xl text-green-700" />
@@ -128,6 +139,7 @@ const UpdateDonation = () => {
           {errors.quantity && <p className="text-red-600 text-sm mt-1">{errors.quantity.message}</p>}
         </div>
 
+        {/* Pickup Time */}
         <div>
           <div className="flex items-center gap-3">
             <FaRegClock className="text-xl text-green-700" />
@@ -141,6 +153,7 @@ const UpdateDonation = () => {
           {errors.pickupTime && <p className="text-red-600 text-sm mt-1">{errors.pickupTime.message}</p>}
         </div>
 
+        {/* Restaurant Name */}
         <div>
           <div className="flex items-center gap-3">
             <FaUserAlt className="text-xl text-green-700" />
@@ -153,6 +166,7 @@ const UpdateDonation = () => {
           </div>
         </div>
 
+        {/* Restaurant Email */}
         <div>
           <div className="flex items-center gap-3">
             <MdEmail className="text-xl text-green-700" />
@@ -165,6 +179,7 @@ const UpdateDonation = () => {
           </div>
         </div>
 
+        {/* Location */}
         <div>
           <div className="flex items-center gap-3">
             <MdLocationOn className="text-xl text-green-700" />
@@ -178,6 +193,7 @@ const UpdateDonation = () => {
           {errors.location && <p className="text-red-600 text-sm mt-1">{errors.location.message}</p>}
         </div>
 
+        {/* Image Upload */}
         <div>
           <div className="flex items-center gap-3">
             <IoIosImages className="text-xl text-green-700" />
@@ -188,15 +204,15 @@ const UpdateDonation = () => {
               className="file-input file-input-bordered w-full bg-white text-black"
             />
           </div>
-          {errors.image && <p className="text-red-600 text-sm mt-1">{errors.image.message}</p>}
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition"
           disabled={mutation.isLoading}
         >
-          Submit Donation
+          {mutation.isLoading ? "Updating..." : "Submit Donation"}
         </button>
       </form>
     </div>
