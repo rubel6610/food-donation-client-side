@@ -1,21 +1,50 @@
 import { Link, NavLink } from "react-router";
 
-import { FaBars, FaUserCircle } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
+
 import UseAuth from "../hooks/UseAuth";
 import Logo from "./Logo";
+import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { user, logout } = UseAuth();
+  const [theme, settheme] = useState("light");
+  useEffect(()=>{
+    document.querySelector('html').setAttribute('data-theme',theme)
+
+  },[theme])
+  const handleTheme = () => {
+    settheme(theme === "light"? "dark":"light")
+  };
   const navItems = (
     <>
-      <li><NavLink to="/" className="font-semibold">Home</NavLink></li>
+      <li>
+        <NavLink to="/" className="font-semibold">
+          Home
+        </NavLink>
+      </li>
       {user && (
         <>
-          <li><NavLink to="/donations" className="font-semibold">All Donations</NavLink></li>
-          <li><NavLink to="/dashboard/profile" className="font-semibold">Dashboard</NavLink></li>
+          <li>
+            <NavLink to="/donations" className="font-semibold">
+              All Donations
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/profile" className="font-semibold">
+              Dashboard
+            </NavLink>
+          </li>
         </>
       )}
-      {!user && <li><NavLink to="/login" className="font-semibold">Login</NavLink></li>}
+      {!user && (
+        <li>
+          <NavLink to="/login" className="font-semibold">
+            Login
+          </NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -29,12 +58,12 @@ const Navbar = () => {
           </label>
           <ul
             tabIndex={1}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 "
           >
             {navItems}
           </ul>
         </div>
-      <Logo/>
+        <Logo />
       </div>
 
       <div className="navbar-center hidden lg:flex">
@@ -42,17 +71,29 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end">
+        <div onClick={handleTheme} className="text-3xl mr-3 ">
+          {theme === "dark"?  <MdOutlineDarkMode/>:<MdDarkMode />  }
+         
+        </div>
         {user ? (
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <img src={user.photoURL} alt={user.displayName} className="w-10 h-10 rounded-full" />
+              <img
+                src={user.photoURL}
+                alt={user.displayName}
+                className="w-10 h-10 rounded-full"
+              />
             </label>
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-200 rounded-box w-40"
             >
-              <li><span>{user.displayName || "User"}</span></li>
-              <li><button onClick={logout}>Logout</button></li>
+              <li>
+                <span>{user.displayName || "User"}</span>
+              </li>
+              <li>
+                <button onClick={logout}>Logout</button>
+              </li>
             </ul>
           </div>
         ) : null}
