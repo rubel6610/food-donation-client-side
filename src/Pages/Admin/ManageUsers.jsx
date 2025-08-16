@@ -101,7 +101,7 @@ const ManageUsers = () => {
                 <button
                   onClick={() => handleUpdateRole(user.email, "admin")}
                   disabled={user.role === "admin"}
-                  className={`btn btn-sm bg-blue-500 text-white hover:bg-blue-600 disabled:bg-gray-400 ${
+                  className={`btn btn-sm text-xs  bg-blue-500 text-white hover:bg-blue-600 disabled:bg-gray-400 ${
                     user.role === "admin" && "hidden"
                   }`}
                 >
@@ -113,7 +113,7 @@ const ManageUsers = () => {
                 <button
                   onClick={() => handleUpdateRole(user.email, "restaurant")}
                   disabled={user.role === "restaurant"}
-                  className={`btn btn-sm bg-green-500 text-white hover:bg-green-600  disabled:bg-gray-400 ${
+                  className={`btn btn-sm text-xs bg-green-500 text-white hover:bg-green-600  disabled:bg-gray-400 ${
                     user.role === "restaurant" && "hidden"
                   }`}
                 >
@@ -125,7 +125,7 @@ const ManageUsers = () => {
                   <button
                     onClick={() => handleUpdateRole(user.email, "charity")}
                     disabled={user.role === "charity"}
-                    className={`btn btn-sm bg-amber-500 text-white hover:bg-amber-600 disabled:bg-gray-400 ${
+                    className={`btn btn-sm text-xs bg-amber-500 text-white hover:bg-amber-600 disabled:bg-gray-400 ${
                       user.role === "charity" && "hidden"
                     }`}
                   >
@@ -135,7 +135,7 @@ const ManageUsers = () => {
                   <button
                     onClick={() => handleUpdateRole(user.email, "user")}
                     disabled={user.role === "user"}
-                    className={`btn btn-sm bg-amber-500 text-white hover:bg-amber-600 disabled:bg-gray-400 ${
+                    className={`btn btn-sm text-xs bg-amber-500 text-white hover:bg-amber-600 disabled:bg-gray-400 ${
                       user.role === "user" && "hidden"
                     }`}
                   >
@@ -146,7 +146,7 @@ const ManageUsers = () => {
               <td>
                 <button
                   onClick={() => handleDeleteUser(user.email, user.userId)}
-                  className="btn btn-sm bg-red-500 text-white hover:bg-red-600"
+                  className="btn btn-sm text-xs bg-red-500 text-white hover:bg-red-600"
                 >
                   Delete
                 </button>

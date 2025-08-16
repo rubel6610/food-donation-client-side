@@ -64,9 +64,9 @@ const Favorites = () => {
             <p  >
               <strong>Quantity:</strong> {donation.quantity}
             </p>
-            <p className="absolute top-1 right-2 text-xs">
+            <p className="absolute top-1 right-2 ">
             <span
-              className={`ml-2 px-2 py-1 rounded text-white text-sm ${
+              className={`ml-2 px-2 rounded text-white text-xs ${
                 donation.donationStatus === "available" ? "bg-green-500" : "bg-gray-500"
               }`}
             >

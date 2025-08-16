@@ -78,7 +78,7 @@ const FeatureDonations = () => {
                     ) : (
                       <button
                         onClick={() => handleFeature(donation._id)}
-                        className="btn btn-xs btn-outline btn-primary"
+                        className="btn btn-xs btn-outline btn-accent"
                         disabled={featureMutation.isPending}
                       >
                         {featureMutation.isPending ? "Updating..." : "Feature"}
