@@ -3,7 +3,6 @@ import Root from "../RootLayout/Root";
 import Home from "../HomeLayout/Home";
 import PrivateRoutes from "./PrivateRoutes";
 import AuthLayout from "../Pages/Authentication/AuthLayout";
-import DashBoardHome from "../Pages/dashboard/DashBoardHome";
 import UserProfile from "../Pages/dashboard/Profile/UserProfile";
 import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
@@ -73,14 +72,7 @@ export const router = createBrowserRouter([
       </PrivateRoutes>
     ),
     children: [
-      {
-        path: "home",
-        element: (
-          <PrivateRoutes>
-            <DashBoardHome />
-          </PrivateRoutes>
-        ),
-      },
+     
       {
         path: "profile",
         element: (

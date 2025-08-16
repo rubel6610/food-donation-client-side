@@ -97,8 +97,8 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-12 px-4">
-      <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-3xl shadow-2xl p-10">
+    <div className="max-w-3xl mx-auto mt-5 px-4">
+      <div className="bg-base-300 rounded-3xl shadow-2xl p-10">
         <h2 className="text-4xl font-bold text-green-700 text-center mb-8 font-serif">
           My Profile
         </h2>
@@ -111,15 +111,15 @@ const UserProfile = () => {
               alt="Profile"
               className="w-32 h-32 rounded-full border-4 border-green-500 shadow-lg object-cover"
             />
-            <h3 className="text-2xl font-semibold text-green-800">
+            <h3 className="text-2xl font-semibold text-green-700">
               {singleUser?.name}
             </h3>
-            <p className="text-gray-600">{singleUser?.email}</p>
-            <p className="text-gray-500">
+            <p className="text-base-content">{singleUser?.email}</p>
+            <p className="text-base-content">
               {singleUser?.mobile || "No mobile added"}
             </p>
             {singleUser.role !== "user" && (
-              <p className="text-gray-600">
+              <p className="text-base-content">
                 <strong>Role : {singleUser.role}</strong>
               </p>
             )}
@@ -148,7 +148,7 @@ const UserProfile = () => {
                   <input
                     type="text"
                     {...register("name", { required: "Name is required" })}
-                    className="input input-bordered w-full text-black bg-white"
+                    className="input input-bordered w-full text-base-content"
                     placeholder="Your Name"
                   />
                   {errors.name && (
@@ -164,7 +164,7 @@ const UserProfile = () => {
                   <input
                     type="email"
                     {...register("email")}
-                    className="input input-bordered w-full  disabled:bg-white disabled:border-none disabled:text-black"
+                    className="input input-bordered w-full   disabled:border-none disabled:text-base-content"
                     disabled
                   />
                   {/* No validation for email since it's disabled */}
@@ -177,7 +177,7 @@ const UserProfile = () => {
                     type="file"
                     accept="image/*"
                     {...register("photoURL")}
-                    className="input input-bordered w-full text-black bg-white"
+                    className="input input-bordered w-full text-base-content"
                   />
                 </div>
                 <div>
@@ -193,7 +193,7 @@ const UserProfile = () => {
                         message: "Enter a valid mobile number",
                       },
                     })}
-                    className="input input-bordered w-full text-black bg-white"
+                    className="input input-bordered w-full text-base-content"
                     placeholder="Mobile Number"
                   />
                   {errors.mobile && (
