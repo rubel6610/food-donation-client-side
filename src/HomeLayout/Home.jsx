@@ -10,7 +10,7 @@ const Home = () => {
         <div>
           <Banner/>
           <FeaturedDonations/>
-          <LatestCharityRequests/>,
+          <LatestCharityRequests/>
           <ImpactStats/>
           <CommunityStories/>
           <Footer/>

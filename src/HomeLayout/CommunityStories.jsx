@@ -32,7 +32,7 @@ const stories = [
 
 const CommunityStories = () => {
   return (
-    <section className="bg-white py-12">
+    <section className="bg-base-300 py-12 rounded-xl">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-10 text-green-700">
           ❤️ Community Stories
@@ -41,7 +41,7 @@ const CommunityStories = () => {
           {stories.map((story) => (
             <div
               key={story.id}
-              className="bg-white border border-gray-200 shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition duration-300"
+              className="bg-base-100 border border-gray-200 shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition duration-300"
             >
               <img
                 src={story.image}
@@ -49,10 +49,10 @@ const CommunityStories = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-5">
-                <h3 className="text-xl font-semibold text-green-800 mb-2">
+                <h3 className="text-xl font-semibold mb-2">
                   {story.title}
                 </h3>
-                <p className="text-gray-600 text-sm">{story.description}</p>
+                <p className="text-gray-400 text-sm">{story.description}</p>
                 <div className="mt-4 text-sm text-green-600 font-medium">
                   — {story.by}
                 </div>

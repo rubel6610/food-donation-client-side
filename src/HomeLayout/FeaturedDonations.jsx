@@ -18,7 +18,7 @@ const FeaturedDonations = () => {
   if (isLoading) return <LoadingPage/>;
 
   return (
-    <div className="py-10 px-4 max-w-7xl mx-auto">
+    <div className="py-10 my-10 bg-base-300 rounded-xl px-4 max-w-7xl mx-auto">
       <h2 className="text-3xl font-bold text-center mb-8 text-green-700">
         🌟 Featured Donations
       </h2>
@@ -54,7 +54,7 @@ const FeaturedDonations = () => {
                 <p className="absolute top-3 right-3">
              
                   <span
-                    className={`badge  ${
+                    className={`badge text-xs  ${
                       donation.donationStatus === "Picked Up"
                         ? "badge-success"
                         : donation.donationStatus === "requested"

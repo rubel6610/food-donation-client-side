@@ -21,7 +21,7 @@ const stats = [
     label: "CO₂ Reduced (kg)",
     value: 8500,
     color: "text-purple-600",
-  },
+  }
 ];
 
 // ✅ Fixed Counter component using useRef
@@ -68,7 +68,7 @@ const ImpactStats = () => {
   }, []);
 
   return (
-    <div className="bg-base-200 py-14 px-4">
+    <div className="bg-base-300 py-14 px-4 my-10 rounded-xl">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-10" data-aos="zoom-in-up">
           🌱 Our Community Impact
@@ -77,7 +77,7 @@ const ImpactStats = () => {
           {stats.map((stat) => (
             <div
               key={stat.id}
-              className="p-6 bg-white shadow-xl rounded-lg border border-gray-200 hover:scale-105 transition-all duration-300"
+              className="p-6 bg-base-100 shadow-xl rounded-lg border border-gray-200 hover:scale-105 transition-all duration-300"
               data-aos="zoom-in"
             >
               <p className={`${stat.color}`}>

@@ -65,14 +65,14 @@ const ManageUsers = () => {
     <div className="overflow-x-auto p-4">
       <h2 className="text-2xl font-bold mb-4">All Users</h2>
       <div className="relative w-full max-w-sm mx-auto my-4">
-        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+        <span className="absolute inset-y-0 left-0 flex items-center pl-3 ">
           <FaSearch />
         </span>
         <input
           type="text"
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search users by name or email..."
-          className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-300 bg-white text-black shadow-sm"
+          className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-300 bg-base-100  shadow-sm"
         />
       </div>
 
@@ -91,7 +91,7 @@ const ManageUsers = () => {
         </thead>
         <tbody>
           {filteredUsers.map((user, idx) => (
-            <tr key={user._id} className="hover:bg-gray-100">
+            <tr key={user._id} className="hover:bg-base-300 hover:text-base-content">
               <td>{idx + 1}</td>
               <td>{user.name || "N/A"}</td>
               <td>{user.email}</td>

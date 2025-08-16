@@ -28,7 +28,9 @@ module.exports = {
           "warning": "#FFC107",
           "error": "#F44336",
         },
+       
       },
+       "dark"
     ],
   },
 };

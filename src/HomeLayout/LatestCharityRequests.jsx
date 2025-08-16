@@ -18,12 +18,12 @@ const LatestCharityRequests = () => {
   if (isLoading) return <LoadingPage />;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="max-w-6xl bg-base-300 text-content mx-auto px-4 py-10 my-10 rounded-xl">
       <h2 className="text-3xl font-bold mb-8 text-center">Latest Charity Requests</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {requests.slice(0, 3).map((req) => (
-          <div key={req._id} className="bg-white border rounded-lg shadow p-5 flex flex-col">
+          <div key={req._id} className="bg-base-100 border rounded-lg  shadow p-5 flex flex-col">
             <div className="flex items-center gap-4 mb-4">
               <img
                 src={req.charityImage}
@@ -33,10 +33,10 @@ const LatestCharityRequests = () => {
               <h3 className="text-xl font-semibold">{req.charityName}</h3>
             </div>
 
-            <p className="text-gray-600 mb-2">
+            <p className=" mb-2">
               <strong>Food Donation:</strong> {req.donationTitle}
             </p>
-            <p className="text-gray-700 italic">"{req.requestDescription}"</p>
+            <p className=" italic">"{req.requestDescription}"</p>
           </div>
         ))}
       </div>

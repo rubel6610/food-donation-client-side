@@ -54,7 +54,7 @@ const ManageDonations = () => {
               <th>Donation Title</th>
               <th>Food Type</th>
               <th>Restaurant Name</th>
-              <th>Email</th>
+              {/* <th>Email</th> */}
               <th>Quantity</th>
               <th>Status</th>
               <th>Actions</th>
@@ -67,10 +67,10 @@ const ManageDonations = () => {
                 <td>{donation.title}</td>
                 <td>{donation.foodType}</td>
                 <td>{donation.restaurantName}</td>
-                <td>{donation.restaurantEmail}</td>
+                {/* <td>{donation.restaurantEmail}</td> */}
                 <td>{donation.quantity}</td>
-                <td>
-                  <span className={`badge ${donation.status === 'verified' ? 'badge-success' : donation.status === 'rejected' ? 'badge-error' : 'badge-warning'}`}>
+                <td className=''>
+                  <span className={`badge  ${donation.status === 'verified' ? 'badge-success' : donation.status === 'rejected' ? 'badge-error' : 'badge-warning'}`}>
                     {donation.status || 'pending'}
                   </span>
                 </td>
