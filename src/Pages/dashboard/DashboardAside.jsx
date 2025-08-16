@@ -21,7 +21,7 @@ const DashboardAside = ({ isOpen, setIsOpen }) => {
 
   return (
     <aside
-      className={`fixed lg:static top-0 left-0 h-full w-64 bg-gradient-to-br from-green-100 via-green-200 to-yellow-100 shadow-xl p-4  rounded-r-3xl flex flex-col z-50 transition-transform duration-300 ease-in-out
+      className={`fixed lg:sticky top-0 left-0 h-full w-64 bg-gradient-to-br from-green-100 via-green-200 to-yellow-100 shadow-xl p-4  rounded-r-3xl flex flex-col z-50 transition-transform duration-300 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 min-h-screen`}
     >
       {/* Mobile Close Button */}

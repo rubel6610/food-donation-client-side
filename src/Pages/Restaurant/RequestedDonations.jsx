@@ -59,7 +59,7 @@ const RequestedDonations = () => {
               <tr>
                 <th>#</th>
                 <th>Donation Title</th>
-                <th>Food Type</th>
+                {/* <th>Food Type</th> */}
                 <th>Charity Name</th>
                 <th>Charity Email</th>
                 <th>Description</th>
@@ -73,11 +73,11 @@ const RequestedDonations = () => {
                 <tr key={req._id}>
                   <td>{index + 1}</td>
                   <td>{req.donationTitle}</td>
-                  <td>{req.foodType || "N/A"}</td>
+                  {/* <td>{req.foodType || "N/A"}</td> */}
                   <td>{req.charityName}</td>
                   <td>{req.charityEmail}</td>
                   <td>{req.requestDescription}</td>
-                  <td>{req.pickupTime}</td>
+                  <td>{req.pickupTime.split("T")[0]}</td>
                   <td>
                     <span
                       className={`badge text-xs whitespace-nowrap ${

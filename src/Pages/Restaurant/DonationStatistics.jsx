@@ -45,7 +45,7 @@ const DonationStatistics = () => {
         🍽️ Donation Statistics (By Food Type)
       </h2>
 
-      <div className="w-full h-96 bg-white rounded-lg shadow p-4">
+      <div className="w-full h-96 bg-base-300 rounded-lg shadow p-4">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
