@@ -33,7 +33,7 @@ const ReceivedDonations = () => {
           {donations.map((donation) => (
             <div
               key={donation._id}
-              className="relative card bg-base-100 shadow-lg border border-base-300"
+              className="relative card bg-base-300 shadow-lg border border-base-300"
             >
 
               <div className="card-body">
@@ -43,8 +43,8 @@ const ReceivedDonations = () => {
                 <p><strong>Quantity:</strong> {donation.quantity}</p>
                 <p><strong>Pickup Date:</strong> {donation.pickupTime?.split("T")[0]}</p>
 
-                <div className="absolute top-6 right-6">
-                  <span className="badge badge-success text-xs px-2 py-1 whitespace-nowrap">
+                <div className="absolute top-2 right-1">
+                  <span className="badge badge-sm badge-success text-xs px-2 py-1 whitespace-nowrap">
                     Picked Up
                   </span>
                 </div>

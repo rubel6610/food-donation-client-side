@@ -65,7 +65,7 @@ const MyPickups = () => {
           {pickups.map((pickup) => (
             <div
               key={pickup._id}
-              className="border p-4 rounded-lg shadow bg-white flex flex-col justify-between"
+              className="border p-4 rounded-lg shadow bg-base-300 flex flex-col justify-between"
             >
               <div>
                 <h3 className="text-xl font-semibold mb-2">{pickup.donationTitle}</h3>

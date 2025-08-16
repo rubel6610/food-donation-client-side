@@ -58,7 +58,7 @@ const MyDonationRequest = () => {
           {requests.map((req) => (
             <div
               key={req._id}
-              className="flex flex-col md:flex-row bg-white rounded-xl shadow border overflow-hidden"
+              className="flex flex-col md:flex-row bg-base-300 p-2 rounded-xl shadow border overflow-hidden"
             >
               {/* Image */}
               {req.imageUrl && (
@@ -66,19 +66,19 @@ const MyDonationRequest = () => {
                   <img
                     src={req.imageUrl}
                     alt="Food"
-                    className="object-cover w-full h-full"
+                    className="object-cover rounded w-full h-full"
                   />
                 </div>
               )}
 
               {/* Info */}
               <div className="flex-1 p-4">
-                <h3 className="text-xl font-semibold text-gray-800 mb-1">
+                <h3 className="text-xl font-semibold  mb-1">
                   {req.donationTitle}
                 </h3>
-                <p className="text-sm text-gray-600">Restaurant: {req.restaurantName}</p>
-                <p className="text-sm text-gray-600">Food Type: {req.foodType}</p>
-                <p className="text-sm text-gray-600">Quantity: {req.quantity}</p>
+                <p className="text-sm ">Restaurant: {req.restaurantName}</p>
+                <p className="text-sm ">Food Type: {req.foodType}</p>
+                <p className="text-sm">Quantity: {req.quantity}</p>
                 <p className="text-sm mt-2">
                   Status:{" "}
                   <span

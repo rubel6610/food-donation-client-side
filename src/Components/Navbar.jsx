@@ -11,11 +11,14 @@ const Navbar = () => {
   const { user, logout } = UseAuth();
   const [theme, settheme] = useState("light");
   useEffect(()=>{
-    document.querySelector('html').setAttribute('data-theme',theme)
+    const themes = localStorage.getItem('theme');
+
+    document.querySelector('html').setAttribute('data-theme',themes)
 
   },[theme])
   const handleTheme = () => {
     settheme(theme === "light"? "dark":"light")
+    localStorage.setItem('theme',theme)
   };
   const navItems = (
     <>
