@@ -54,7 +54,7 @@ const MyReviews = () => {
           {reviews.map((review) => (
             <div
               key={review._id}
-              className="border p-4 rounded-lg bg-white shadow hover:shadow-md transition"
+              className="border p-4 rounded-lg bg-base-300 shadow hover:shadow-md transition"
             >
               <div className="flex justify-between items-center mb-2">
                 <h2 className="font-semibold text-lg">{review.donationTitle}</h2>
@@ -67,7 +67,7 @@ const MyReviews = () => {
               <p className="text-sm text-gray-500 mb-1">
                 Restaurant: {review.restaurantName}
               </p>
-              <p className="text-gray-700 mb-2">{review.description}</p>
+              <p className=" mb-2">{review.description}</p>
               <p className="text-sm text-gray-500 mb-3">
                 Reviewed on: {format(new Date(review.reviewedAt), "dd MMM yyyy")}
               </p>

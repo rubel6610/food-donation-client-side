@@ -97,9 +97,9 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-5 px-4">
+    <div className="max-w-3xl mx-auto  px-4">
       <div className="bg-base-300 rounded-3xl shadow-2xl p-10">
-        <h2 className="text-4xl font-bold text-green-700 text-center mb-8 font-serif">
+        <h2 className="text-4xl font-bold text-green-700 text-center mb-6 font-serif">
           My Profile
         </h2>
 
@@ -126,7 +126,7 @@ const UserProfile = () => {
 
             {!editing && (
               <button
-                className="btn btn-accent mt-4"
+                className="btn btn-accent mt-2"
                 onClick={() => setEditing(true)}
               >
                 Edit Profile
@@ -139,7 +139,7 @@ const UserProfile = () => {
             <div className="md:col-span-2">
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                className="grid grid-cols-1 md:grid-cols-2 gap-2"
               >
                 <div>
                   <label className="label font-semibold text-green-700">

@@ -29,36 +29,36 @@ const RequestCharityRole = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-gradient-to-br from-green-50 to-yellow-50 rounded-3xl shadow-2xl p-10">
-      <h2 className="text-3xl font-bold text-green-700 text-center mb-8 font-serif">
+    <div className="max-w-xl mx-auto bg-base-300 shadow-2xl p-10">
+      <h2 className="text-3xl font-bold text-green-600 text-center mb-8 font-serif">
         Request Charity Role
       </h2>
       {!charityInfo ? (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
           <div>
-            <label className="label font-semibold text-green-700">Your Name</label>
+            <label className="label font-semibold text-green-600">Your Name</label>
             <input
               type="text"
               value={user?.displayName || ""}
               readOnly
-              className="input input-bordered w-full bg-primary-content text-black"
+              className="input input-bordered w-full bg-base-100"
             />
           </div>
           <div>
-            <label className="label font-semibold text-green-700">Your Email</label>
+            <label className="label font-semibold text-green-600">Your Email</label>
             <input
               type="email"
               value={user?.email || ""}
               readOnly
-              className="input input-bordered w-full bg-primary-content text-black"
+              className="input input-bordered w-full bg-base-100"
             />
           </div>
           <div>
-            <label className="label font-semibold text-green-700">Organization Name</label>
+            <label className="label font-semibold text-green-600">Organization Name</label>
             <input
               type="text"
               {...register("organization", { required: "Organization name is required" })}
-              className="input input-bordered w-full bg-white text-black"
+              className="input input-bordered w-full bg-base-100 text-base-content"
               placeholder="Enter your organization name"
             />
             {errors.organization && (
@@ -66,10 +66,10 @@ const RequestCharityRole = () => {
             )}
           </div>
           <div>
-            <label className="label font-semibold text-green-700">Mission Statement</label>
+            <label className="label font-semibold text-green-600">Mission Statement</label>
             <textarea
               {...register("mission", { required: "Mission statement is required" })}
-              className="textarea textarea-bordered w-full bg-white text-black"
+              className="textarea textarea-bordered w-full bg-base-100 text-base-content"
               rows={4}
               placeholder="Describe your organization's mission"
             />
@@ -78,7 +78,7 @@ const RequestCharityRole = () => {
             )}
           </div>
           <div className="flex items-center justify-between rounded-lg px-4 ">
-            <span className="font-bold text-green-700 text-lg">Payment Amount</span>
+            <span className="font-bold text-green-600 text-lg">Payment Amount</span>
             <span className="font-bold text-green-800 text-xl">${FIXED_PAYMENT}</span>
           </div>
           <button

@@ -40,8 +40,8 @@ const AddReviewModal = ({ openReviewModal, onClose, donation }) => {
   if (!openReviewModal) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
-      <div className="bg-white w-[90%] max-w-md p-6 rounded-lg shadow-lg space-y-4">
+    <div className="fixed inset-0 bg-base-100 bg-opacity-30 flex justify-center items-center z-50">
+      <div className="bg-base-300 w-[90%] max-w-md p-6 rounded-lg shadow-lg space-y-4">
         <h2 className="text-xl font-semibold text-center">Add Review</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
