@@ -102,7 +102,7 @@ const DonationDetails = () => {
 
         <div className="card-body lg:w-1/2  ">
           <h2 className="card-title  text-2xl font-bold">{donation.title}</h2>
-          <p className="text-gray-600">
+          <p className="">
             <strong>Food Type:</strong> {donation.foodType}
           </p>
           <p>

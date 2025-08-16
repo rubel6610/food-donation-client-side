@@ -41,21 +41,21 @@ const AllDonations = () => {
   });
 
   return (
-    <div className="px-4 py-8 max-w-7xl mx-auto">
+    <div className="px-4 py-8 max-w-7xl mx-auto bg-base-300">
       <h2 className="text-2xl font-bold mb-4 text-center">🍱 All Donations</h2>
 
 
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
      
-        <div className="relative w-full  md:w-1/4">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+        <div className="relative w-full  md:w-1/3">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-base-content">
             <FaSearch />
           </span>
           <input
             type="text"
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by location"
-            className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 transition bg-white text-black shadow-sm"
+            className="pl-10 pr-4 py-2 w-full rounded border border-gray-300 focus:outline-none  transition bg-base-100 text-base-content shadow-sm"
           />
         </div>
 
@@ -64,7 +64,7 @@ const AllDonations = () => {
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
-            className="select select-bordered w-full"
+            className="select  w-full  border-none"
           >
             <option value="">Sort by</option>
             <option value="quantity">Quantity</option>
@@ -74,40 +74,38 @@ const AllDonations = () => {
       </div>
 
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-6 justify-center">
         {sortedDonations.map((donation) => (
           <div
             key={donation._id}
-            className="relative w-full card bg-base-100 shadow-md border border-base-300 rounded-md"
+            className="relative w-full card bg-base-100 shadow-md border border-base-300 rounded-md p-2"
           >
             <figure className="h-40 overflow-hidden rounded-t-md">
               <img
                 src={donation.imageUrl}
                 alt={donation.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-md"
               />
             </figure>
 
-            <div className="card-body p-4 space-y-1">
+            <div className="card-body px-2 ">
               <h2 className="text-lg font-semibold truncate">
                 {donation.title}
               </h2>
-              <p className="text-sm text-gray-600 truncate">
+              <p className="text-sm  truncate">
                 <strong>Restaurant:</strong> {donation.restaurantName}
               </p>
-              <p className="text-sm text-gray-600 truncate">
+              <p className="text-sm  truncate">
                 <strong>Location:</strong> {donation.location}
               </p>
-              <p className="text-sm text-gray-600 truncate">
+              <p className="text-sm  truncate">
                 <strong>Charity:</strong>{" "}
                 {donation.requestedCharityName || "Not Assigned"}
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm ">
                 <strong>Quantity:</strong> {donation.quantity}
               </p>
-              <p className="text-sm text-gray-600">
-                <strong>Pickup:</strong> {donation.pickupTime}
-              </p>
+             
 
     
               <div className="absolute top-3 right-3">
