@@ -9,19 +9,19 @@ const Banner = () => {
   const slides = [
     {
       id: 1,
-      img: "https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg",
+      img: "https://images.unsplash.com/photo-1592417817038-d13fd7342605?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Reduce Food Waste",
       subtitle: "Help minimize food waste by donating your surplus food today!",
     },
     {
       id: 2,
-      img: "https://images.pexels.com/photos/6646877/pexels-photo-6646877.jpeg",
+      img: "https://images.unsplash.com/photo-1576867757603-05b134ebc379?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Empower Charities",
       subtitle: "Connect restaurants with charities to empower lives and reduce hunger.",
     },
     {
       id: 3,
-      img: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg",
+      img: "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Make Every Meal Count",
       subtitle: "Every extra meal can be someone's only meal — make it count!",
     },
@@ -43,7 +43,7 @@ const Banner = () => {
             <img
               src={slide.img}
               alt={`Slide ${slide.id}`}
-              className="h-[80vh] w-full object-cover  brightness-70"
+              className="h-[80vh] w-full object-cover  brightness-60"
             />
             {/* Overlay */}
             <div className="absolute inset-0  bg-opacity-40 flex flex-col justify-center items-center text-white text-center px-6">
