@@ -2,8 +2,8 @@ import React from 'react';
 
 const HowItWorks = () => {
     return (
-        <section className="max-w-6xl bg-base-100 my-10 mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold mb-8">🤝 How It Works</h2>
+        <section className="max-w-6xl bg-base-100 my-10 mx-auto px-4 text-center ">
+        <h2 className="text-3xl text-green-700 font-bold mb-8">🤝 How It Works</h2>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="p-6 bg-base-200 shadow rounded-2xl">
             <h3 className="text-xl font-semibold mb-2">🥘 Donate Food</h3>

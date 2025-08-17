@@ -15,60 +15,69 @@ const FeaturedDonations = () => {
     },
   });
 
-  if (isLoading) return <LoadingPage/>;
+  if (isLoading) return <LoadingPage />;
 
   return (
-    <div className="py-10 my-10 bg-base-200 rounded-xl px-4 max-w-7xl mx-auto">
-      <h2 className="text-3xl font-bold text-center mb-8 text-green-700">
+    <div className="py-12 my-12 bg-base-300 rounded-2xl px-6 max-w-7xl mx-auto shadow-md">
+      <h2 className="text-3xl font-extrabold text-center mb-10 text-green-700 drop-shadow-md">
         🌟 Featured Donations
       </h2>
 
       {featuredDonations.length === 0 ? (
-        <p className="text-center text-gray-500">No featured donations yet.</p>
+        <p className="text-center  text-lg">
+          No featured donations yet.
+        </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {featuredDonations.slice(0, 4).map((donation) => (
             <div
               key={donation._id}
-              className="card bg-base-100 shadow-lg border border-base-300"
+              className="relative group  rounded-2xl shadow-lg hover:shadow-2xl border overflow-hidden transition duration-300"
             >
-              <figure className="overflow-hidden h-40">
+              {/* Image */}
+              <figure className="h-46 w-full overflow-hidden">
                 <img
                   src={donation.imageUrl}
                   alt={donation.title}
-                  className="object-cover w-full h-full"
+                  className="object-cover w-full h-full transform group-hover:scale-110 transition duration-500"
                 />
               </figure>
 
-              <div className="card-body">
-                <h3 className="text-lg font-semibold">{donation.title}</h3>
-                <p>
-                  <strong>Type:</strong> {donation.foodType}
-                </p>
-                <p>
-                  <strong>Restaurant:</strong> {donation.restaurantName}
-                </p>
-                <p>
-                  <strong>Location:</strong> {donation.location}
-                </p>
-                <p className="absolute top-3 right-3">
-             
-                  <span
-                    className={`badge text-xs  ${
-                      donation.donationStatus === "Picked Up"
-                        ? "badge-success"
-                        : donation.donationStatus === "requested"
-                        ? "badge-warning"
-                        : "badge-info"
-                    }`}
-                  >
-                    {donation.donationStatus}
-                  </span>
-                </p>
+              {/* Badge */}
+              <div className="absolute top-3 right-3">
+                <span
+                  className={`badge px-3 py-1 text-xs font-medium rounded-full shadow-sm ${
+                    donation.donationStatus === "Picked Up"
+                      ? "bg-green-500 "
+                      : donation.donationStatus === "requested"
+                      ? "bg-yellow-500 "
+                      : "bg-blue-500 "
+                  }`}
+                >
+                  {donation.donationStatus}
+                </span>
+              </div>
+
+              {/* Card body */}
+              <div className="p-5 flex flex-col justify-between h-50">
+                <div>
+                  <h3 className="text-lg font-bold  mb-2 line-clamp-1">
+                    {donation.title}
+                  </h3>
+                  <p className="text-sm">
+                    <strong>Type:</strong> {donation.foodType}
+                  </p>
+                  <p className="text-sm ">
+                    <strong>Restaurant:</strong> {donation.restaurantName}
+                  </p>
+                  <p className="text-sm  line-clamp-1">
+                    <strong>Location:</strong> {donation.location}
+                  </p>
+                </div>
 
                 <Link to={`/donation-details/${donation._id}`}>
-                  <button className="btn btn-sm btn-outline btn-primary w-full mt-3">
-                    Details
+                  <button className="btn btn-sm bg-green-600 hover:bg-green-700 text-white w-full mt-4 rounded-lg shadow-md transition duration-300">
+                    View Details
                   </button>
                 </Link>
               </div>

@@ -24,7 +24,7 @@ const UpcomingEvents = () => {
   return (
     <section className="py-12 bg-base-100">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-6">📅 Upcoming Events</h2>
+        <h2 className="text-3xl text-green-700 font-bold mb-6">📅 Upcoming Events</h2>
         <div className="grid md:grid-cols-2 gap-6">
           {events.map((event) => (
             <div

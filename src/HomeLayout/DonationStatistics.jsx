@@ -17,7 +17,7 @@ const DonationStatistics = () => {
   return (
     <section className="py-12 bg-base-200 rounded-xl">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-6">📊 Donation Statistics</h2>
+        <h2 className="text-3xl text-green-700 font-bold mb-6">📊 Donation Statistics</h2>
         <div className="flex justify-center">
           <PieChart width={400} height={300}>
             <Pie
