@@ -49,7 +49,7 @@ const AddReviewModal = ({ openReviewModal, onClose, donation }) => {
             <label className="block font-semibold">Your Name</label>
             <input
               type="text"
-              readOnly
+            
               defaultValue={user?.displayName}
               className="input input-bordered w-full"
             />

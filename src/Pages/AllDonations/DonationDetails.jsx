@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import { FaHeart, FaCheckCircle, FaRegCheckCircle } from "react-icons/fa";
+import { FaHeart, FaCheckCircle,  } from "react-icons/fa";
 import { MdOutlineRateReview } from "react-icons/md";
 import useAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -10,6 +10,7 @@ import AddReviewModal from "../Reviews/AddReviewModal";
 import Reviews from "../Reviews/Reviews";
 import UseAuth from "../../hooks/UseAuth";
 import Swal from "sweetalert2";
+import  axios  from 'axios';
 
 const DonationDetails = () => {
   const axiosSecure = useAxiosSecure();
@@ -21,7 +22,7 @@ const DonationDetails = () => {
   const { data: donation = {} } = useQuery({
     queryKey: ["donationDetails"],
     queryFn: async () => {
-      const res = await axiosSecure(`/donation/${id}`);
+      const res = await axios(`${import.meta.env.VITE_BASE_URL}/donation/${id}`);
       return res.data;
     },
   });
@@ -190,7 +191,7 @@ const DonationDetails = () => {
               </>
             )}
 
-            {role !== "admin" && role !== "restaurant" && (
+            {role === "charity" || role === "user" ? (
               <>
                 <button
                   onClick={() => setOpenReviewModal(true)}
@@ -204,7 +205,7 @@ const DonationDetails = () => {
                   donation={donation}
                 />
               </>
-            )}
+            ):null}
           </div>
         </div>
       </div>

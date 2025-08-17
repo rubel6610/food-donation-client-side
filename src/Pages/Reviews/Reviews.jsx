@@ -1,20 +1,24 @@
 import React from "react";
-import useAxiosSecure from "../../hooks/UseAxiosSecure";
+import axios from "axios";
+// import useAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import { format } from "date-fns";
 
 
+
+
 const Reviews = () => {
-    const axiosSecure = useAxiosSecure();
+    // const axiosSecure = useAxiosSecure();
     const {id}=useParams();
     const {data:reviews=[],isLoading}=useQuery({
         queryKey:["reviews",id],
         queryFn:async()=>{
-            const res = await axiosSecure(`/reviews/${id}`);
+            const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/reviews/${id}`);
             return res.data;
         }
     })
+    
     if(isLoading) return  <div className="flex justify-center items-center mt-4">
       <span className="loading loading-spinner text-secondary loading-md"></span>
       <p className="ml-2 text-blue-700">Loading...</p>

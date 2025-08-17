@@ -1,7 +1,5 @@
 import { Link, NavLink } from "react-router";
-
 import { FaBars } from "react-icons/fa";
-
 import UseAuth from "../hooks/UseAuth";
 import Logo from "./Logo";
 import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
@@ -9,17 +7,25 @@ import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { user, logout } = UseAuth();
-  const [theme, settheme] = useState("light");
-  useEffect(()=>{
-    const themes = localStorage.getItem('theme');
+  const [theme, setTheme] = useState("dark");
 
-    document.querySelector('html').setAttribute('data-theme',themes)
+  // প্রথমবার লোড হলে localStorage থেকে theme নিয়ে আসবে
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme") || "dark";
+    setTheme(storedTheme);
+    document.querySelector("html").setAttribute("data-theme", storedTheme);
+  }, []);
 
-  },[theme])
+  // যখনই theme state পরিবর্তন হবে, localStorage এবং html attribute update করবে
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.querySelector("html").setAttribute("data-theme", theme);
+  }, [theme]);
+
   const handleTheme = () => {
-    settheme(theme === "light"? "dark":"light")
-    localStorage.setItem('theme',theme)
+    setTheme(theme === "dark" ? "light" : "dark");
   };
+
   const navItems = (
     <>
       <li>
@@ -27,24 +33,15 @@ const Navbar = () => {
           Home
         </NavLink>
       </li>
+      <li>
+        <NavLink to="/donations" className="font-semibold">
+          All Donations
+        </NavLink>
+      </li>
       {user && (
-        <>
-          <li>
-            <NavLink to="/donations" className="font-semibold">
-              All Donations
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/profile" className="font-semibold">
-              Dashboard
-            </NavLink>
-          </li>
-        </>
-      )}
-      {!user && (
         <li>
-          <NavLink to="/login" className="font-semibold">
-            Login
+          <NavLink to="/dashboard/profile" className="font-semibold">
+            Dashboard
           </NavLink>
         </li>
       )}
@@ -52,9 +49,9 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-md fixed   top-0 z-50 px-4">
+    <div className="navbar bg-base-100 shadow-md fixed top-0 z-50 px-4">
       <div className="navbar-start">
-        {/* Mobile Menu Toggle (left side on small devices) */}
+        {/* Mobile Menu */}
         <div className="dropdown dropdown-bottom lg:hidden mr-2">
           <label tabIndex={1} className="btn btn-ghost lg:hidden">
             <FaBars />
@@ -74,10 +71,12 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end">
-        <div onClick={handleTheme} className="text-3xl mr-3 ">
-          {theme === "dark"?  <MdOutlineDarkMode/>:<MdDarkMode />  }
-         
+        {/* Theme Toggle */}
+        <div onClick={handleTheme} className="text-3xl mr-3 cursor-pointer">
+          {theme === "dark" ? <MdOutlineDarkMode /> : <MdDarkMode />}
         </div>
+
+        {/* User Dropdown */}
         {user ? (
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -99,7 +98,15 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-        ) : null}
+        ) : (
+          <ul className="menu">
+            <li>
+              <NavLink to="/login" className="font-semibold">
+                Login
+              </NavLink>
+            </li>
+          </ul>
+        )}
       </div>
     </div>
   );

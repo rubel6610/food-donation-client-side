@@ -62,7 +62,7 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className="overflow-x-auto p-4">
+    <div className="overflow-x-auto ">
       <h2 className="text-2xl font-bold mb-4">All Users</h2>
       <div className="relative w-full max-w-sm mx-auto my-4">
         <span className="absolute inset-y-0 left-0 flex items-center pl-3 ">
