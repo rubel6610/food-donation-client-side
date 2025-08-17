@@ -32,7 +32,7 @@ const stories = [
 
 const CommunityStories = () => {
   return (
-    <section className="bg-base-300 py-12 rounded-xl">
+    <section className="bg-base-200 py-12 rounded-xl">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-10 text-green-700">
           ❤️ Community Stories

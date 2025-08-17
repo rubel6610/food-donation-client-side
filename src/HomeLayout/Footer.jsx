@@ -4,28 +4,17 @@ import { Link } from "react-router";
 
 const Footer = () => {
   return (
-    <footer className="bg-base-300 py-8 mt-10 rounded-xl">
-      <div className=" px-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+    <footer className="bg-base-200 py-8 mt-10 rounded-xl">
+      <div className=" px-4 flex justify-between gap-6 text-center md:text-left">
 
         <div>
           <h3 className="text-lg font-semibold mb-2">About</h3>
-          <p className="text-sm">
+          <p className="text-sm w-96">
             We are committed to reducing food waste by connecting restaurants and charities for meaningful food distribution.
           </p>
         </div>
 
 
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
-          <ul className="space-y-1 text-sm">
-            <li>
-              <Link to="/about" className="hover:text-green-600">About Us</Link>
-            </li>
-            <li>
-              <Link to="/contact" className="hover:text-green-600">Contact</Link>
-            </li>
-          </ul>
-        </div>
 
    
         <div>

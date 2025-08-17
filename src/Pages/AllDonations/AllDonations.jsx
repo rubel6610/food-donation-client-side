@@ -41,7 +41,7 @@ const AllDonations = () => {
   });
 
   return (
-    <div className="px-4 py-8 max-w-7xl mx-auto bg-base-300">
+    <div className="px-4 py-8 max-w-7xl mx-auto bg-base-100">
       <h2 className="text-2xl font-bold mb-4 text-center">🍱 All Donations</h2>
 
 
@@ -60,11 +60,11 @@ const AllDonations = () => {
         </div>
 
         {/* Sort select */}
-        <div className="w-full md:w-1/4">
+        <div className="w-full  md:w-1/4">
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
-            className="select  w-full  border-none"
+            className="select  w-full rounded border border-gray-300 focus:outline-none  transition bg-base-100 text-base-content shadow-sm"
           >
             <option value="">Sort by</option>
             <option value="quantity">Quantity</option>

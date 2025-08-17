@@ -18,7 +18,7 @@ const LatestCharityRequests = () => {
   if (isLoading) return <LoadingPage />;
 
   return (
-    <div className="max-w-6xl bg-base-300 text-content mx-auto px-4 py-10 my-10 rounded-xl">
+    <div className="max-w-6xl bg-base-100 text-content mx-auto px-4 py-10 my-10 rounded-xl">
       <h2 className="text-3xl font-bold mb-8 text-center">Latest Charity Requests</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

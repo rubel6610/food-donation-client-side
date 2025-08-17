@@ -68,7 +68,7 @@ const ImpactStats = () => {
   }, []);
 
   return (
-    <div className="bg-base-300 py-14 px-4 my-10 rounded-xl">
+    <div className="bg-base-200 py-14 px-4 my-10 rounded-xl">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-10" data-aos="zoom-in-up">
           🌱 Our Community Impact
