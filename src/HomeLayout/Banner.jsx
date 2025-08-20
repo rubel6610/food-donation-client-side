@@ -43,7 +43,7 @@ const Banner = () => {
             <img
               src={slide.img}
               alt={`Slide ${slide.id}`}
-              className="h-[80vh] w-full object-cover  brightness-60"
+              className="md:h-[70vh] h-[50vh] w-full object-cover  brightness-60"
             />
             {/* Overlay */}
             <div className="absolute inset-0  bg-opacity-40 flex flex-col justify-center items-center text-white text-center px-6">

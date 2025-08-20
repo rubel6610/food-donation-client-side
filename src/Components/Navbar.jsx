@@ -9,14 +9,13 @@ const Navbar = () => {
   const { user, logout } = UseAuth();
   const [theme, setTheme] = useState("dark");
 
-  // প্রথমবার লোড হলে localStorage থেকে theme নিয়ে আসবে
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme") || "dark";
     setTheme(storedTheme);
     document.querySelector("html").setAttribute("data-theme", storedTheme);
   }, []);
 
-  // যখনই theme state পরিবর্তন হবে, localStorage এবং html attribute update করবে
+  
   useEffect(() => {
     localStorage.setItem("theme", theme);
     document.querySelector("html").setAttribute("data-theme", theme);
@@ -49,16 +48,17 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-md fixed top-0 z-50 px-4">
+ <div className="navbar  bg-base-100 shadow-md fixed top-0 z-50  px-4">
+
       <div className="navbar-start">
         {/* Mobile Menu */}
-        <div className="dropdown dropdown-bottom lg:hidden mr-2">
+        <div className="dropdown dropdown-bottom lg:hidden">
           <label tabIndex={1} className="btn btn-ghost lg:hidden">
             <FaBars />
           </label>
           <ul
             tabIndex={1}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 "
+            className="menu menu-sm dropdown-content mt-3 z-[1]  shadow bg-base-100 rounded-box w-40 sm:w-52"
           >
             {navItems}
           </ul>
@@ -67,12 +67,12 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 space-x-2">{navItems}</ul>
+        <ul className="menu menu-horizontal ">{navItems}</ul>
       </div>
 
       <div className="navbar-end">
         {/* Theme Toggle */}
-        <div onClick={handleTheme} className="text-3xl mr-3 cursor-pointer">
+        <div onClick={handleTheme} className="text-3xl px-2 cursor-pointer">
           {theme === "dark" ? <MdOutlineDarkMode /> : <MdDarkMode />}
         </div>
 
@@ -88,7 +88,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-200 rounded-box w-40"
+              className="menu menu-sm dropdown-content mt-3 shadow bg-base-200 rounded-box w-40"
             >
               <li>
                 <span>{user.displayName || "User"}</span>
