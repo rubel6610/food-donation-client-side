@@ -15,14 +15,14 @@ const DonationStatistics = () => {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 
   return (
-    <section className="py-12 bg-base-200 rounded-xl">
+    <section className="py-10 bg-base-200 rounded-xl">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-3xl text-green-700 font-bold mb-6">📊 Donation Statistics</h2>
         <div className="flex justify-center">
-          <PieChart width={400} height={300}>
+          <PieChart width={340} height={320}>
             <Pie
               data={stats}
-              cx={200}
+              cx={170}
               cy={150}
               outerRadius={100}
               fill="#8884d8"
